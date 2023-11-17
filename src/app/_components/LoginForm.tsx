@@ -22,7 +22,7 @@ const LoginForm = () => {
   const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
-const response = await axios.post(`http://localhost:8000/auth/token`, formData);
+const response = await axios.post(`https://cyc-backend.onrender.com/auth/token`, formData);
 
       if (response.status === 200) {
         const data = await response.data;
