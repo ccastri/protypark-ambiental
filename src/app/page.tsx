@@ -8,13 +8,13 @@ const Page = () => {
   const [token, setToken] = useState<null|string>(null);
   const router = useRouter();
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
+  // useEffect(() => {
+  //   const accessToken = localStorage.getItem('accessToken');
 
-    if (!accessToken) {
-      router.push('/auth'); // Redirect to login page if accessToken is not present
-    }
-  }, [router]);
+  //   if (!accessToken) {
+  //     router.push('/auth'); // Redirect to login page if accessToken is not present
+  //   }
+  // }, [router]);
 
   return (
     <main>

@@ -66,13 +66,13 @@ import { useRouter } from 'next/navigation';
 
 const Page = () => {
     const router = useRouter()
- useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
+//  useEffect(() => {
+//     const accessToken = localStorage.getItem('accessToken');
 
-    if (accessToken) {
-      router.push('/'); // Redirect to login page if accessToken is not present
-    }
-  }, [router]);
+//     if (accessToken) {
+//       router.push('/'); // Redirect to login page if accessToken is not present
+//     }
+//   }, [router]);
   return (
     <div className="w-screen h-screen">
       <LoginForm/>

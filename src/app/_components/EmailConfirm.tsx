@@ -71,7 +71,7 @@ const UserProfileTable = ({ profiles }: any) => {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Apellido</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor planilla</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ultimo pago</th>
+            {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ultimo pago</th> */}
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vista Previa</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Observacion</th>
             {/* ... Agregar más encabezados para otros campos */}
@@ -80,12 +80,12 @@ const UserProfileTable = ({ profiles }: any) => {
         <tbody className="bg-white divide-y divide-gray-200">
           {profiles.map((profile: any, index: number) => (
             <tr key={index}>
-              <td className="px-6 py-4 whitespace-nowrap">{profile["Tipo Identificacion"]}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{profile["Tipo_Identificacion"]}</td>
               <td className="px-6 py-4 whitespace-nowrap">{profile["Identificación"]}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{profile["Primer Nombre"]}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{profile["Primer Apellido"]}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{`$${profile["Valor Total"]}`}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{`${profile["Fecha_Ultimo_Pago"]}`}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{profile["Primer_Nombre"]}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{profile["Primer_Apellido"]}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{`$${profile["Valor_Total"]}`}</td>
+              {/* <td className="px-6 py-4 whitespace-nowrap">{`${profile["Fecha_Ultimo_Pago"]}`}</td> */}
               <td className="px-6 py-4  cursor-pointer hover:text-blue-500 hover:underline truncate overflow-ellipsis truncate-link whitespace-nowrap" onClick={()=>  window.open(profile["Link_Planillas"], '_blank')}><div></div>{`${profile["Link_Planillas"]}`}</td>
               <td className="px-6 py-4  cursor-pointer hover:text-blue-500 hover:underline truncate overflow-ellipsis truncate-link whitespace-nowrap">{`${profile["Observaciones"]}`}</td>
               {/* ... Agregar más celdas para otros campos */}
@@ -119,16 +119,19 @@ const mockUserProfilePreview=   {
     "Observaciones":"+"
   }
 
-const url='http://127.0.0.1:8000/access-google-drive/10hVrKmMzQ-YumgQVJ3gDq_i9Fv1wdiBp1hPAO7wt2vk'
+// const url='http://127.0.0.1:8000/access-google-drive/10hVrKmMzQ-YumgQVJ3gDq_i9Fv1wdiBp1hPAO7wt2vk'
+// const url='http://127.0.0.1:8000/afiliados/72'
+const url='http://127.0.0.1:8000/afiliados'
  const accessToken =   "ya29.a0AfB_byCjB3cKqgEoI0RocSdvw-Lfhi3Yoc_AouSEb4TNdgn9eW2oZCtD4XFrx6xEIFgG3svgIVXntK0Q8iWSv44Qen_woqITVeQqX0jI5ByDQvQI2gKDOm2A0dhGq57OGwzmXHOoBfJy45JHYt4KNaz138XPkfPeoZQMaCgYKAcgSARASFQHGX2MisRilPSXk8Q0PilsjPj2cRQ0171"
     const handleClick = async () => {
     try {
       const response = await axios.get(url, {
-                headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+                // headers: {
+          // Authorization: `Bearer ${accessToken}`,
+        // },
       });
-      console.log(response); // Do something with the response if needed
+      console.log(response.data); // Do something with the response if needed
+      const users = response.data
     } catch (error) {
       console.error('Error fetching data:', error);
     }
