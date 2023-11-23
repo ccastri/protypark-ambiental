@@ -1,24 +1,20 @@
 'use client'
-import { useRouter } from 'next/navigation';
-import Home from './_components/EmailConfirm';
-import LoginForm from './auth/page';
-import { useEffect, useState } from 'react';
 
+import DocumentosAfiliados from './_components/Test3';
+import TuComponentePrincipal from './_components/Test3';
+// import DocumentosAfiliados from './_components/SelectDocuments';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store'; // Importa tu store aquí
 const Page = () => {
-  const [token, setToken] = useState<null|string>(null);
-  const router = useRouter();
 
-  // useEffect(() => {
-  //   const accessToken = localStorage.getItem('accessToken');
-
-  //   if (!accessToken) {
-  //     router.push('/auth'); // Redirect to login page if accessToken is not present
-  //   }
-  // }, [router]);
 
   return (
     <main>
-      <Home />
+      {/* <Home /> */}
+    <Provider store={store}>
+      {/* Resto de tu aplicación */}
+      <TuComponentePrincipal />
+    </Provider>
     </main>
   );
 };
