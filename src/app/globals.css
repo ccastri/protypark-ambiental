@@ -30,3 +30,14 @@
   white-space: normal;
   max-width: 300px;
 }
+
+.button-hovered {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  /* Apply transitions to transform and opacity */
+}
+
+.button-hovered:hover {
+  transform: scale(1.05);
+  opacity: 0.8;
+}

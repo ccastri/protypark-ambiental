@@ -14,11 +14,14 @@ const selectedAfiliadosSlice = createSlice({
   name: 'selectedAfiliados',
   initialState,
   reducers: {
-    addAfiliado: (state, action: PayloadAction<{ id: number; tipo_identificacion: string; identificacion:number }>) => { // Cambio aquí
-      state.selectedAfiliados.push(action.payload);
+    addAfiliado: (state, action: PayloadAction<DocumentoAfiliado>) => {
+      const existingAfiliado = state.selectedAfiliados.find((doc) => doc.id === action.payload.id);
+      if (!existingAfiliado) {
+        state.selectedAfiliados.push(action.payload);
+      }
     },
-    removeAfiliado: (state, action: PayloadAction<number>) => {
-      state.selectedAfiliados = state.selectedAfiliados.filter((afiliado:Afiliado) => afiliado.id !== action.payload);
+removeAfiliado: (state, action: PayloadAction<number>) => {
+      state.selectedAfiliados = state.selectedAfiliados.filter((doc: DocumentoAfiliado) => doc.id !== action.payload);
     },
   },
 });
