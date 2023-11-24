@@ -30,28 +30,42 @@ console.log(files)
       )),
     [files]
   );
-const handleClick = async()=>{
-    try {
-      const formData = new FormData();
-      files.forEach((file) => {
-        formData.append('uploaded_file', file);
-      });
+const handleClick = async () => {
+  try {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append('uploaded_file', file);
+    });
 
-      // Enviar el estado 'files' al endpoint de tu API
-      const response = await axios.post('http://localhost:8000/afiliados-zip', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+    // Enviar el estado 'files' al endpoint de tu API
+    const response = await axios.post('http://localhost:8000/afiliados-zip', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      responseType: 'blob', // Esperamos un tipo de respuesta Blob (archivo binario)
+    });
 
-      // Realizar acciones con la respuesta si es necesario
-      console.log('Respuesta de la API:', response.data);
-    } catch (error) {
-      console.error('Error al enviar los archivos:', error);
-      // Manejar errores
-    }
+    // Crear un objeto URL para el Blob de la respuesta
+    const blob = new Blob([response.data], { type: 'application/zip' });
+    const url = window.URL.createObjectURL(blob);
 
-}
+    // Crear un enlace (link) para la descarga
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'archivos_renombrados.zip');
+    document.body.appendChild(link);
+
+    // Simular clic en el enlace para iniciar la descarga
+    link.click();
+
+    // Limpiar recursos después de la descarga
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error('Error al enviar los archivos:', error);
+    // Manejar errores
+  }
+};
   return (
     <div className='flex h-auto flex-col'>
     <div className='border-2 border-red-500 bg-slate-400 relative h-72 flex flex-col justify-center items-center'>
