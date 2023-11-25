@@ -4,9 +4,10 @@ import { useDropzone } from 'react-dropzone';
 // import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 interface FileUploaderProps {
   onUpload: (files: File[]) => void;
+  handleClick: ()=>void
 }
 
-export const FileUploader: React.FC<FileUploaderProps> = ({ onUpload }) => {
+export const FileUploader: React.FC<FileUploaderProps> = ({ onUpload, handleClick }) => {
   const [files, setFiles] = useState<File[]>([]);
 
   const onDrop = useCallback(
@@ -30,42 +31,7 @@ console.log(files)
       )),
     [files]
   );
-const handleClick = async () => {
-  try {
-    const formData = new FormData();
-    files.forEach((file) => {
-      formData.append('uploaded_file', file);
-    });
 
-    // Enviar el estado 'files' al endpoint de tu API
-    const response = await axios.post('http://localhost:8000/afiliados-zip', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      responseType: 'blob', // Esperamos un tipo de respuesta Blob (archivo binario)
-    });
-
-    // Crear un objeto URL para el Blob de la respuesta
-    const blob = new Blob([response.data], { type: 'application/zip' });
-    const url = window.URL.createObjectURL(blob);
-
-    // Crear un enlace (link) para la descarga
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'archivos_renombrados.zip');
-    document.body.appendChild(link);
-
-    // Simular clic en el enlace para iniciar la descarga
-    link.click();
-
-    // Limpiar recursos después de la descarga
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(link);
-  } catch (error) {
-    console.error('Error al enviar los archivos:', error);
-    // Manejar errores
-  }
-};
   return (
     <div className='flex h-auto flex-col'>
     <div className='border-2 border-red-500 bg-slate-400 relative h-72 flex flex-col justify-center items-center'>
