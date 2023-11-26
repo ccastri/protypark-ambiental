@@ -304,6 +304,13 @@
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-5.14.18.tgz#f8b187dc89756fa5c0b7d15aea537a6f73f0c2d8"
   integrity sha512-yFpF35fEVDV81nVktu0BE9qn2dD/chs7PsQhlyaV3EnTeZi9RZBuvoEfRym1/jmhJ2tcfeWXiRuHG942mQXJJQ==
 
+"@mui/icons-material@^5.14.18":
+  version "5.14.18"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.14.18.tgz#9e92964cde8c7ba32cf50438a83403dc283f2328"
+  integrity sha512-o2z49R1G4SdBaxZjbMmkn+2OdT1bKymLvAYaB6pH59obM1CYv/0vAVm6zO31IqhwtYwXv6A7sLIwCGYTaVkcdg==
+  dependencies:
+    "@babel/runtime" "^7.23.2"
+
 "@mui/material@^5.14.18":
   version "5.14.18"
   resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.14.18.tgz#d0a89be3e27afe90135d542ddbf160b3f34e869c"
@@ -493,6 +500,14 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
 
+"@types/material-ui@^0.21.14":
+  version "0.21.14"
+  resolved "https://registry.yarnpkg.com/@types/material-ui/-/material-ui-0.21.14.tgz#372c1c0725c4b33790fd73d6484f8e7f4cad1e06"
+  integrity sha512-VTU7Lvlh0VJk2pN049JZnIzXiN846KRypLCD7uKJ2bCpeZj0OsbjwHXXuN8N7SRppSaHjiqVndFRNi1otYMmQg==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-addons-linked-state-mixin" "*"
+
 "@types/node@^20":
   version "20.9.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.9.0.tgz#bfcdc230583aeb891cf51e73cfdaacdd8deae298"
@@ -514,6 +529,13 @@
   version "15.7.11"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.11.tgz#2596fb352ee96a1379c657734d4b913a613ad563"
   integrity sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==
+
+"@types/react-addons-linked-state-mixin@*":
+  version "0.14.25"
+  resolved "https://registry.yarnpkg.com/@types/react-addons-linked-state-mixin/-/react-addons-linked-state-mixin-0.14.25.tgz#5f9eb5c476189f730cb6b0799373da900c4ccbe3"
+  integrity sha512-l8XsujO4KiMvBFef+zvenLtLhYl8uKF/s1uGGug5+YcCx7TDvR80b4YjKWy/nBkkFpPz9HsfN0AY9uoI7nURIg==
+  dependencies:
+    "@types/react" "*"
 
 "@types/react-dom@^18":
   version "18.2.15"

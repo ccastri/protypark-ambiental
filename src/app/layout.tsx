@@ -2,8 +2,9 @@ import type { Metadata } from 'next'
 import { Inconsolata } from 'next/font/google'
 import './globals.css'
 import ChatBubble from './_components/ChatBubble'
+import Header from './_components/Header'
 
-const inter = Inconsolata({ subsets: ['latin'] })
+const inconsolata = Inconsolata({ subsets: ['latin'] })
 // Raleway
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,7 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}
+      <body className={inconsolata.className}>
+      <Header/>
+        
+        {children}
            <ChatBubble />
       </body>
     </html>

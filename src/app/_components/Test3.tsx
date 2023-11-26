@@ -89,8 +89,13 @@ const ListaAfiliados = ({ handleAfiliadoSeleccionado }: { handleAfiliadoSeleccio
   };
 
   return (
-    <div className='border-2 flex flex-col w-full items-center justify-center h-auto py-8 space-y-2 bg-red-100'>
-      <h1 className='text-green-600 font-bold text-3xl mb-4'>Lista de Afiliados</h1>
+    <>
+    <div 
+    id="lista-afiliados"
+    className='border-2 flex flex-col w-full items-center justify-center h-auto py-8 space-y-2 bg-blue-100'>
+      <h1 className='text-green-600 text-left w-full border-2 font-bold text-3xl pt-6 px-20 mb-4'>Lista de Afiliados</h1>
+      <div className="flex w-full space-x-20 px-20">
+      <h2 className="w-56 text-3xl opacity-60 font-semibold">1. Selecciona los afiliados de tu listado para consultar la planilla en simple</h2>
       <div className='p-2 space-y-4 border-2 flex flex-col w-12/12 bg-white rounded-md shadow-md'>
         <div className='p-2 space-y-4 border-2 flex  flex-col w-12/12'>
           <h2 className='text-center text-red-600 font-semibold text-xl'>Informacion Afiliados</h2>
@@ -105,6 +110,7 @@ onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) 
 
 </select>
 </span>
+    
 </label>
   <label className="px-2 items-center flex"> EPS <span className="px-2"><select 
 className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
@@ -147,14 +153,14 @@ className=" border-2 rounded-full space-x-2 p-2 bg-[#fafafa]">
   </label>
   </div>
           <table className="w-full">
-            <thead className='bg-green-200'>
+            <thead className=''>
               <tr className=" w-full ">
-                <th className="border-2 border-black px-4">Nombre</th>
-                <th className="border-2 border-black px-4">Tipo <br/> Documento</th>
-                <th className="border-2 border-black px-4">Identificación</th>
-                <th className="border-2 border-black px-4">AFP</th>
-                <th className="border-2 border-black px-4">Estado</th>
-                <th className="border-2 border-black px-4">Acciones</th>
+                <th className="border-2 border-gray-700 px-4">Nombre</th>
+                <th className="border-2 border-gray-700 px-4">Tipo <br/> Documento</th>
+                <th className="border-2 border-gray-700 px-4">Identificación</th>
+                <th className="border-2 border-gray-700 px-4">AFP</th>
+                <th className="border-2 border-gray-700 px-4">Estado</th>
+                <th className="border-2 border-gray-700 px-4">Acciones</th>
                 
               </tr>
             </thead>
@@ -168,7 +174,7 @@ className=" border-2 rounded-full space-x-2 p-2 bg-[#fafafa]">
                   <td className=" text-center button-hovered">{afiliado.tipo_identificacion}</td>
                   <td className=" text-center button-hovered">{afiliado.identificacion}</td>
                   <td className=" text-center button-hovered">{afiliado.afp ? 'E': 'N'}</td>
-                  <td className=" text-center button-hovered">{afiliado.estado}</td>
+                  <td className= {` text-center button-hovered `}><div className= {`${afiliado.estado === 'Activo'? 'bg-green-500 ' :'bg-red-500'} rounded-full text-center button-hovered `}>{afiliado.estado}</div></td>
                   <td><div className="w-3/12 flex items-center justify-between  p-4 space-x-4 right-0">
             <span className=" p-4 h-12 flex w-12 text-center items-center justify-center border-2 rounded-full">Editar</span>
             <span className=" p-4 h-12 flex w-12 text-center items-center justify-center border-2 rounded-full">Ver</span>
@@ -181,6 +187,7 @@ className=" border-2 rounded-full space-x-2 p-2 bg-[#fafafa]">
             </tbody>
           </table>
         </div>
+      </div>
       </div>
       <div className='flex w-auto space-x-32 p-4 items-center justify-evenly'>
         <span className='border-2 py-2 px-4 rounded-full border-[#000f] text-xl button-hovered' onClick={handlePreviousPage}>
@@ -201,6 +208,8 @@ onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) 
         </span>
       </div>
     </div>
+  </>
+  
   );
 };
 
@@ -298,11 +307,12 @@ const handleSubmitEmails = async () => {
     dispatch(removeAfiliado(id));
   };
 return (
-<div className="flex flex-col w-full h-full py-4 border-2 bg-gray-100">
-  <h1 className="text-center mb-4">Documentos de Afiliados Seleccionados</h1>
-  <div className="w-full h-full border-2 cursor-pointer">
+<div className="flex flex-col  w-full items-center justify-center my-auto  h-auto py-20 border-2 bg-gray-300">
+  <h1 className="text-center  text-3xl mb-4">Documentos de Afiliados Seleccionados</h1>
+  <h6 className="text-center text-xl mb-4">Este es el listado de cedulas que necesitas cargar en simple para descargar el listado de planillas en pdf correspondiente <br/> <span className="font-bold underline">presiona el boton de convertir a xls</span> para descargar un archivo de excel con el formato requerido</h6>
+  <div className="w-full h-screen border-2 cursor-pointer">
     {selectedAfiliados.length > 0 && (
-      <>
+      <div id="seleccion-descarga" className="">
         <div className="flex items-center justify-center space-x-4 bg-gray-300 p-2 border-b-2">
           <h2 className="w-1/2 text-center">Tipo de Documento</h2>
           <h2 className="w-1/2 text-center">Número de Documento</h2>
@@ -321,35 +331,52 @@ return (
         </div>
         <div
           onClick={handleConvertirAXLS}
-          className="flex items-center justify-center mt-4 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
+          className="flex items-center justify-center pb-20 mt-4 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
         >
           <span className="border-2 w-auto flex justify-center rounded-full p-4 bg-green-300 text-gray-500">
             Convertir a xls
           </span>
         </div>
-      </>
+      </div>
     )}
 
 
-      <div className="flex flex-col border-2 bg-gray-100 h-screen text-center mt-4">
-        <h2>{`Aqui puedes cargar archivos para formatear el nombre y preparar envío de notificación de pago. Presiona aquí si estás seguro.`}</h2>
-        <div className="items-center text-center flex h-[50%] mx-auto border-2 w-full">
+      <div className="flex flex-col border-2 bg-gray-100 h-auto  text-center">
+        <div className="flex h-screen border-2 border-green-200 p-8 flex-col">
+        {/* <h2>{`Aqui puedes cargar archivos para formatear el nombre y preparar envío de notificación de pago. Presiona aquí si estás seguro.`}</h2> */}
+            <span>3. En esta seccion prepararás tus archivos. Debes usar el archivo obtenido en la pagina de simple con las planillas de tus afiliados   </span>
+            <><br/> Usa el espacio para carga de imagenes (parte izquierda) y presiona el boton procesar los archivos</>
+        <div 
+        id="renombrar-planillas"
+        className="items-center  text-center flex py-8 mx-auto h-full space-x-8 px-12 border-2 w-full">
           <FileUploader
             onUpload={() => {}}
-            name={'para descargar el mismo archivo.zip con las planillas renombradas y listas para el envío!'}
+            name={'para renombrar'}
             handleClick={handleClick}
             files={files}
             setFiles={setFiles}
-          />
+            />
+
         </div>
-        <div className="w-full items-center text-center h-[50%] flex mx-auto">
+        </div>
+        <div 
+        id="enviar-correos"
+        className="w-full items-center text-center h-auto flex flex-col mx-auto">
+        <div className="flex h-screen border-2 border-green-200 p-8 flex-col">
+                      <div className="flex flex-col p">
+            <span className="underline p-12">4. En esta seccion enviarás emails a tu listado de afiliados:   </span>
+            <><br/> Usa el espacio para carga de imagenes (parte izquierda) y carga el archivo .zip con el listado de pdfs renombrados <br/>
+            <span className="text-red-500 font-bold font-3xl">¡NO OLVIDES QUE DEBE CONTENER EL ARCHIVO DE EXCEL OBTENIDO EN EL PASO ANTERIOR! </span>
+            Presiona el boton enviarás un correo con el archivo pdf de la planilla a cada afiliado contenido en el excel</>
+            </div>
           <FileUploader
             onUpload={() => {}}
-            name={'y envía el reporte mensual de pago de planilla a los afiliados del archivo que subiste'}
+            name={'para enviar correos'}
             handleClick={handleSubmitEmails}
             files={filesToEmail}
             setFiles={setFilesToEmail}
           />
+        </div>
         </div>
       </div>
     </div>
@@ -386,7 +413,7 @@ const handleAfiliadoSeleccionado = async (id: number, tipoIdentificacion: string
 
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 h-full ">
       <ListaAfiliados handleAfiliadoSeleccionado={handleAfiliadoSeleccionado} />
       <DocumentosAfiliados documentosAfiliados={documentosAfiliados} />
     </div>
