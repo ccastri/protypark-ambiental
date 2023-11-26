@@ -41,3 +41,22 @@
   transform: scale(1.05);
   opacity: 0.8;
 }
+
+
+@keyframes changeColors {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: changeColors 2s linear infinite;
+}

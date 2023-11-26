@@ -15,6 +15,7 @@ export interface Afiliado {
     identificacion: number;
     tipo_identificacion: string;
     afp: string;
+    estado: string;
   // ... Otras propiedades de Afiliado
 }
 
@@ -26,26 +27,26 @@ export interface DocumentoAfiliado {
   afp: string
 }
 // Función que devuelve la lista de afiliados según el tipo de planilla
-const ListaPorTipoPlanilla = ({ afiliados, handleAfiliadoSeleccionado }: any) => {
-  return (
-    <ul className='space-y-2 '>
-      {afiliados.map((afiliado: Afiliado, index: number) => (
-        <li key={index}>
-          <div className={`${afiliado.afp !== null ? 'bg-green-500 ' : 'bg-red-500'} border-2 items-center hover:opacity-80 button-hovered text-[#fafafa] flex flex-col h-auto rounded-full px-4 py-2`} onClick={() => handleAfiliadoSeleccionado(afiliado.id, afiliado.tipo_identificacion, afiliado.identificacion, afiliado.afp)}>
-            <>{afiliado.id}. {afiliado.primer_nombre} {afiliado.primer_apellido} {afiliado.tipo_identificacion}  {afiliado.identificacion}{afiliado.afp} </>
-            <span className="items-center flex justify-center w-full">{afiliado.afp !== null ? 'E' : 'N'}</span>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
-};
+// const ListaPorTipoPlanilla = ({ afiliados, handleAfiliadoSeleccionado }: any) => {
+//   return (
+//     <ul className='space-y-2 '>
+//       {afiliados.map((afiliado: Afiliado, index: number) => (
+//         <li key={index}>
+//           <div className=>
+//             <>{afiliado.id}. {afiliado.primer_nombre} {afiliado.primer_apellido} {afiliado.tipo_identificacion}  {afiliado.identificacion}{afiliado.afp} </>
+//             <span className="items-center flex justify-center w-full">{afiliado.afp !== null ? 'E' : 'N'}</span>
+//           </div>
+//         </li>
+//       ))}
+//     </ul>
+//   );
+// };
 
 const ListaAfiliados = ({ handleAfiliadoSeleccionado }: { handleAfiliadoSeleccionado: (id: number, tipoIdentificacion: string, identificacion:number, afp: string) => void }) => {
   const [afiliados, setAfiliados] = useState<Afiliado[]>([]);
-  const [pagination, setPagination] = useState({ skip: 0, limit: 10 });
-  const [afiliadosConPlanilla, setAfiliadosConPlanilla] = useState<Afiliado[]>([]);
-  const [afiliadosSinPlanilla, setAfiliadosSinPlanilla] = useState<Afiliado[]>([]);
+  const [pagination, setPagination] = useState({ skip: 0, limit: 5 });
+  const [combinedAfiliados, setCombinedAfiliados] = useState<Afiliado[]>([]);
+    const [totalAfiliados, setTotalAfiliados] = useState(0);
 
   useEffect(() => {
     const fetchAfiliados = async () => {
@@ -54,15 +55,16 @@ const ListaAfiliados = ({ handleAfiliadoSeleccionado }: { handleAfiliadoSeleccio
         if (!response.ok) {
           throw new Error('Error al obtener los afiliados');
         }
-        const data: Afiliado[] = await response.json();
-        setAfiliados(data);
+        const data = await response.json();
+        // console.log(data)
+        setAfiliados(data.afiliados); // Asigna los afiliados desde la respuesta del backend
+        setTotalAfiliados(data.cantidad); // Asigna el número total de afiliados desde la resp
 
-        // Filtrar afiliados por tipo de planilla (afp no es null o es null)
-        const afiliadosCon = data.filter((afiliado) => afiliado.afp !== null);
-        const afiliadosSin = data.filter((afiliado) => afiliado.afp === null);
+        // Combinar los afiliados con y sin planilla en un solo array
+        const afiliadosCon:Afiliado[] = data.afiliados.filter((afiliado:Afiliado) => afiliado.afp !== null).map((afiliado:Afiliado) => ({ ...afiliado, tipoPlanilla: 'E' }));
+        const afiliadosSin:Afiliado[] = data.afiliados.filter((afiliado:Afiliado) => afiliado.afp === null).map((afiliado:Afiliado) => ({ ...afiliado, tipoPlanilla: 'N' }));
 
-        setAfiliadosConPlanilla(afiliadosCon);
-        setAfiliadosSinPlanilla(afiliadosSin);
+        setCombinedAfiliados([...afiliadosCon, ...afiliadosSin]);
       } catch (error) {
         console.error(error);
         // Manejo de errores
@@ -71,36 +73,130 @@ const ListaAfiliados = ({ handleAfiliadoSeleccionado }: { handleAfiliadoSeleccio
 
     fetchAfiliados();
   }, [pagination]);
-
+// console.log
   const handleNextPage = () => {
-    setPagination((prevPagination) => ({ ...prevPagination, skip: prevPagination.skip + prevPagination.limit }));
+    const newSkip = pagination.skip + pagination.limit;
+    if (newSkip < totalAfiliados) {
+      setPagination((prevPagination) => ({ ...prevPagination, skip: newSkip }));
+    }
   };
 
   const handlePreviousPage = () => {
-    if (pagination.skip >= pagination.limit) {
-      setPagination((prevPagination) => ({ ...prevPagination, skip: prevPagination.skip - prevPagination.limit }));
+    const newSkip = pagination.skip - pagination.limit;
+    if (newSkip >= 0) {
+      setPagination((prevPagination) => ({ ...prevPagination, skip: newSkip }));
     }
   };
 
   return (
-    <div className='border-2 flex flex-col w-full items-center justify-center h-auto py-8 space-y-2'>
-      <h1>Lista de Afiliados</h1>
-      <div className="flex items-center justify-evenly h-auto mx-auto w-10/12 space-x-8">
+    <div className='border-2 flex flex-col w-full items-center justify-center h-auto py-8 space-y-2 bg-red-100'>
+      <h1 className='text-green-600 font-bold text-3xl mb-4'>Lista de Afiliados</h1>
+      <div className='p-2 space-y-4 border-2 flex flex-col w-12/12 bg-white rounded-md shadow-md'>
+        <div className='p-2 space-y-4 border-2 flex  flex-col w-12/12'>
+          <h2 className='text-center text-red-600 font-semibold text-xl'>Informacion Afiliados</h2>
+          <p>Para buscar más rápido puedes usar los siguientes filtros de busqueda:</p>
+<div className="flex justify-between space-x-8">  
+   <label className="px-2 items-center flex"> Orden alfabético <span className="px-2 relative">
+    <select 
+className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
+onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) })}>
+  <option value="A-Z">A-Z</option>
+  <option value="Z-A">Z-A</option>
 
-      <div className='p-2 space-y-4 border-2  w-12/12'>
-        <h2 className='text-center '>Planilla E: con pensión</h2>
-        <ListaPorTipoPlanilla afiliados={afiliadosConPlanilla} handleAfiliadoSeleccionado={handleAfiliadoSeleccionado} />
-      </div>
-      <div  className='p-2 space-y-4 w-12/12'>
-        <h2 className='text-center'>Planilla N: sin pensión</h2>
-        <ListaPorTipoPlanilla afiliados={afiliadosSinPlanilla} handleAfiliadoSeleccionado={handleAfiliadoSeleccionado} />
-      </div>
+</select>
+</span>
+</label>
+  <label className="px-2 items-center flex"> EPS <span className="px-2"><select 
+className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
+onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) })}>
+  <option value="SOS EPS">SOS EPS</option>
+  <option value="SALUD TOTAL EPS">SALUD TOTAL EPS</option>
+  <option value="EPS SANITAS">EPS SANITAS</option>
+  <option value="EPS SURA">EPS SURA</option>
+  <option value="NUEVA EPS">NUEVA EPS</option>
+  <option value="EMSSANAR EPS">EMSSANAR EPS</option>
+  <option value="COMFENALCO VALLE EPS">COMFENALCO VALLE EPS</option>
+  <option value="EPS-S COOSALUD">EPS-S COOSALUD</option>
+  {/* Add more options as needed */}
+</select></span></label>
+  <label className="px-2 items-center flex"> AFP <span className="px-2"><select 
+className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
+onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) })}>
+  <option value="COLPENSIONES">COLPENSIONES</option>
+  <option value="PROTECCION">PROTECCION</option>
+  <option value="PORVENIR">PORVENIR</option>
+  <option value="COLFONDOS">COLFONDOS</option>
+</select></span></label>
+  {/* <label className="px-2 flex"> <input className="pl-2" type="checkbox" id="riesgo"/> <span className="px-2">RIESGO</span></label> */}
+  </div>
+  <div className=" justify-between items-center flex p-4">
+
+  <label className="px-2 flex items-center justify-center space-x-6"><span className="bg-blue-200  text-gray-700  px-2 space-x-4 shadow-md rounded-lg"
+>Número de Cédula</span> <input className="w-44 border-2 rounded-full" type="text" id="numeroCedula"/> </label>
+  <label><span className="px-2">RIESGO</span>
+
+  <select 
+className=" border-2 rounded-full space-x-2 p-2 bg-[#fafafa]">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  {/* Add more options as needed */}
+</select>
+  </label>
+  </div>
+          <table className="w-full">
+            <thead className='bg-green-200'>
+              <tr className=" w-full ">
+                <th className="border-2 border-black px-4">Nombre</th>
+                <th className="border-2 border-black px-4">Tipo <br/> Documento</th>
+                <th className="border-2 border-black px-4">Identificación</th>
+                <th className="border-2 border-black px-4">AFP</th>
+                <th className="border-2 border-black px-4">Estado</th>
+                <th className="border-2 border-black px-4">Acciones</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              {combinedAfiliados.map((afiliado, index) => (
+                // <div key={index} onClick={handleAfiliadoSeleccionado(index, afiliado.primer_nombre, afiliado.identificacion, afiliado.afp)}  className="flex flex-col">
+                <tr key={index} 
+                onClick={()=>handleAfiliadoSeleccionado(index, afiliado.tipo_identificacion, afiliado.identificacion, afiliado.afp)}
+                 className={`${afiliado.afp !== null ? 'bg-red-200' : 'bg-green-200'} hover:bg-yellow-200 transition duration-300 cursor-pointer space-x-12`}>
+                  <td className=" text-center button-hovered">{afiliado.primer_nombre} {afiliado.primer_apellido}</td>
+                  <td className=" text-center button-hovered">{afiliado.tipo_identificacion}</td>
+                  <td className=" text-center button-hovered">{afiliado.identificacion}</td>
+                  <td className=" text-center button-hovered">{afiliado.afp ? 'E': 'N'}</td>
+                  <td className=" text-center button-hovered">{afiliado.estado}</td>
+                  <td><div className="w-3/12 flex items-center justify-between  p-4 space-x-4 right-0">
+            <span className=" p-4 h-12 flex w-12 text-center items-center justify-center border-2 rounded-full">Editar</span>
+            <span className=" p-4 h-12 flex w-12 text-center items-center justify-center border-2 rounded-full">Ver</span>
+            <span className=" p-4 h-12 flex w-12 text-center items-center justify-center border-2 rounded-full">Copiar</span>
+          </div></td>
+          
+                </tr>
+                // </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <div className='flex w-auto space-x-32 p-4 items-center justify-evenly'>
         <span className='border-2 py-2 px-4 rounded-full border-[#000f] text-xl button-hovered' onClick={handlePreviousPage}>
           Anterior
         </span>
-        <span className='border-2 py-2 px-4 rounded-full bg-[#000f] text-[#fafafa] text-xl   button-hovered' onClick={handleNextPage}>
+<select 
+className="p-3 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa] "
+onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) })}>
+  <option value="5">5</option>
+  <option value="10">10</option>
+  <option value="20">20</option>
+  <option value="30">30</option>
+  {/* Add more options as needed */}
+</select>
+
+        <span className='border-2 py-2 px-4 rounded-full bg-[#000f] text-[#fafafa] text-xl button-hovered' onClick={handleNextPage}>
           Siguiente
         </span>
       </div>
@@ -108,9 +204,13 @@ const ListaAfiliados = ({ handleAfiliadoSeleccionado }: { handleAfiliadoSeleccio
   );
 };
 
+// export default ListaAfiliados;
+
 
 const DocumentosAfiliados = ({ documentosAfiliados }: { documentosAfiliados: DocumentoAfiliado[] }) => {
     console.log(documentosAfiliados)
+      const [files, setFiles] = useState<File[]>([]);
+      const [filesToEmail, setFilesToEmail] = useState<File[]>([]);
     const selectedAfiliados = useSelector((state: RootState) => state.selectedUser.selectedAfiliados);
         const dispatch = useDispatch();
 const handleConvertirAXLS = async () => {
@@ -136,139 +236,126 @@ const handleConvertirAXLS = async () => {
   }
 };
 const handleClick = async () => {
-//   try {
-//     const formData = new FormData();
-//     files.forEach((file) => {
-//       formData.append('uploaded_file', file);
-//     });
+  try {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append('uploaded_file', file);
+    });
 
-//     // Enviar el estado 'files' al endpoint de tu API
-//     const response = await axios.post('http://localhost:8000/afiliados-zip', formData, {
-//       headers: {
-//         'Content-Type': 'multipart/form-data',
-//       },
-//       responseType: 'blob', // Esperamos un tipo de respuesta Blob (archivo binario)
-//     });
+    // Enviar el estado 'files' al endpoint de tu API
+    const response = await axios.post('http://localhost:8000/afiliados-zip', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      responseType: 'blob', // Esperamos un tipo de respuesta Blob (archivo binario)
+    });
 
-//     // Crear un objeto URL para el Blob de la respuesta
-//     const blob = new Blob([response.data], { type: 'application/zip' });
-//     const url = window.URL.createObjectURL(blob);
+    // Crear un objeto URL para el Blob de la respuesta
+    const blob = new Blob([response.data], { type: 'application/zip' });
+    const url = window.URL.createObjectURL(blob);
 
-//     // Crear un enlace (link) para la descarga
-//     const link = document.createElement('a');
-//     link.href = url;
-//     link.setAttribute('download', 'archivos_renombrados.zip');
-//     document.body.appendChild(link);
+    // Crear un enlace (link) para la descarga
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'archivos_renombrados.zip');
+    document.body.appendChild(link);
 
-//     // Simular clic en el enlace para iniciar la descarga
-//     link.click();
+    // Simular clic en el enlace para iniciar la descarga
+    link.click();
 
-//     // Limpiar recursos después de la descarga
-//     window.URL.revokeObjectURL(url);
-//     document.body.removeChild(link);
-//   } catch (error) {
-//     console.error('Error al enviar los archivos:', error);
-//     // Manejar errores
-//   }
+    // Limpiar recursos después de la descarga
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error('Error al enviar los archivos:', error);
+    // Manejar errores
+  }
 };
-const handleSubmitEmails = () =>{
-  // Logica para hacer una peticion al backend:
-//   @app.post("/enviar-archivos")
-// async def enviar_archivos_a_afiliados(uploaded_file: UploadFile = File(...)):
-//     try:
-//         # Leer el archivo .zip
-//         zip_file = await uploaded_file.read()
+const handleSubmitEmails = async () => {
+  try {
+    const formData = new FormData();
+    filesToEmail.forEach((file) => {
+      formData.append('uploaded_file', file);
+    });
 
-//         # Crear un objeto ZipFile
-//         with zipfile.ZipFile(BytesIO(zip_file), "r") as zip_ref:
-//             # Buscar el archivo .csv dentro del .zip
-//             csv_file_name = next(
-//                 (
-//                     file_name
-//                     for file_name in zip_ref.namelist()
-//                     if file_name.lower().endswith(".csv")
-//                 ),
-//                 None,
-//             )
+    const response = await axios.post('http://localhost:8000/enviar-archivos', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
 
-//             # Si se encuentra el archivo .csv, procesarlo
-//             if csv_file_name:
-//                 # Leer el contenido del archivo .csv con Pandas
-//                 with zip_ref.open(csv_file_name) as csv_file:
-//                     df = pd.read_csv(csv_file)
+    console.log('Respuesta del servidor:', response.data);
 
-//                     # Iterar sobre cada fila del archivo .csv
-//                     for index, row in df.iterrows():
-//                         (
-//                             nombre_archivo,
-//                             correo,
-//                             primer_nombre,
-//                             primer_apellido,
-//                             numero_celular,
-//                         ) = row
-
-//                         # Extraer el proveedor del correo electrónico
-//                         proveedor_correo = correo.split("@")[1]
-
-//                         # Buscar y enviar el archivo correspondiente a cada afiliado por correo
-//                         for file_name in zip_ref.namelist():
-//                             if (
-//                                 file_name.lower().endswith(".pdf")
-//                                 and nombre_archivo in file_name
-//                             ):
-//                                 # Leer el contenido del archivo PDF
-//                                 with zip_ref.open(file_name) as pdf_file:
-//                                     pdf_content = pdf_file.read()
-
-//                                     # Enviar el archivo PDF por correo al afiliado
-//                                     enviar_pdf(
-//                                         correo,
-//                                         pdf_content,
-//                                         file_name,
-//                                         provider=proveedor_correo,
-//                                     )
-//     except Exception as e:
-//         return {"error": str(e)}
-}
+    // Aquí puedes manejar la respuesta del servidor según sea necesario
+    // Por ejemplo, mostrar un mensaje de éxito al usuario
+  } catch (error) {
+    console.error('Error al enviar los archivos:', error);
+    // Manejar errores
+    // Por ejemplo, mostrar un mensaje de error al usuario
+  }
+};
   const handleRemoveAfiliado = (id: number) => {
     dispatch(removeAfiliado(id));
   };
-  return (
-    <div className="flex flex-col w-full h-full py-4 border-2">
-      <h1>Documentos de Afiliados Seleccionados</h1>
-      <div className="w-full h-full border-2">
-        {/* <div className> */}
-        {selectedAfiliados.length> 0 &&
+return (
+<div className="flex flex-col w-full h-full py-4 border-2 bg-gray-100">
+  <h1 className="text-center mb-4">Documentos de Afiliados Seleccionados</h1>
+  <div className="w-full h-full border-2 cursor-pointer">
+    {selectedAfiliados.length > 0 && (
+      <>
+        <div className="flex items-center justify-center space-x-4 bg-gray-300 p-2 border-b-2">
+          <h2 className="w-1/2 text-center">Tipo de Documento</h2>
+          <h2 className="w-1/2 text-center">Número de Documento</h2>
+        </div>
+        <div className="h-full w-full border-2">
+          {selectedAfiliados.map((afiliado, index) => (
+            <div
+              className="w-full flex items-center justify-center h-auto border-b-2 transition-colors duration-300 hover:bg-red-200"
+              key={index}
+              onClick={() => handleRemoveAfiliado(afiliado.id)}
+            >
+              <p className="w-1/2 text-center">{afiliado.tipo_identificacion}</p>
+              <p className="w-1/2 text-center">{afiliado.identificacion}</p>
+            </div>
+          ))}
+        </div>
+        <div
+          onClick={handleConvertirAXLS}
+          className="flex items-center justify-center mt-4 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
+        >
+          <span className="border-2 w-auto flex justify-center rounded-full p-4 bg-green-300 text-gray-500">
+            Convertir a xls
+          </span>
+        </div>
+      </>
+    )}
 
- (       <>
-   <div className="flex items-center justify-center space-x-4">
-            <h2>Tipo de Documento</h2>
-            <h2>Número de Documento</h2>
-          </div>
-        <div className="h-full w-full border-2 ">
-{selectedAfiliados.map((afiliado, index) => (
-              <div className='w-full space-x-2 flex items-center button-hovered justify-center h-auto border-2-black' key={index} onClick={() => handleRemoveAfiliado(afiliado.id)}>
-            <p className="w-auto text-center border-green-500">{afiliado.tipo_identificacion}</p>
-            <p className="w-auto">{afiliado.identificacion}</p>
-          </div>
-        ))}
+
+      <div className="flex flex-col border-2 bg-gray-100 h-screen text-center mt-4">
+        <h2>{`Aqui puedes cargar archivos para formatear el nombre y preparar envío de notificación de pago. Presiona aquí si estás seguro.`}</h2>
+        <div className="items-center text-center flex h-[50%] mx-auto border-2 w-full">
+          <FileUploader
+            onUpload={() => {}}
+            name={'para descargar el mismo archivo.zip con las planillas renombradas y listas para el envío!'}
+            handleClick={handleClick}
+            files={files}
+            setFiles={setFiles}
+          />
         </div>
-        <div onClick={handleConvertirAXLS} className='border- w-auto items-center flex justify center rounded-full p-4 bg-green-300 text-gray-500'>Convertir a xls</div>
-        </>
-        )
-      }
-        
-          <div className="w-4/12 items-center text-center flex mx-auto">
-          <FileUploader onUpload={()=>{}} handleClick={handleClick}/>
+        <div className="w-full items-center text-center h-[50%] flex mx-auto">
+          <FileUploader
+            onUpload={() => {}}
+            name={'y envía el reporte mensual de pago de planilla a los afiliados del archivo que subiste'}
+            handleClick={handleSubmitEmails}
+            files={filesToEmail}
+            setFiles={setFilesToEmail}
+          />
         </div>
-          <div className="w-4/12 items-center text-center flex mx-auto">
-          <FileUploader onUpload={()=>{}} handleClick={handleSubmitEmails}/>
-        </div>
-        
-        </div>
+      </div>
     </div>
-  );
-};
+  </div>
+);
+            }
 
 const TuComponentePrincipal = () => {
   const [documentosAfiliados, setDocumentosAfiliados] = useState<DocumentoAfiliado[]>([]);
