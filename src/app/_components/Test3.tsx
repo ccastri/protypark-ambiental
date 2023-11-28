@@ -50,11 +50,27 @@ const ListaAfiliados = ({ handleAfiliadoSeleccionado }: { handleAfiliadoSeleccio
   const [pagination, setPagination] = useState({ skip: 0, limit: 5 });
   const [combinedAfiliados, setCombinedAfiliados] = useState<Afiliado[]>([]);
     const [totalAfiliados, setTotalAfiliados] = useState(0);
+const [filtros, setFiltros] = useState<any>({
+  orden: '',
+  // eps: '',
+  afp: '',
+  identificacion: '',
+  // riesgo: null,
+});
+
+// Función para manejar cambios en los filtros
+const handleFilterChange = (filterName: string, value: string) => {
+  const parsedValue = value === 'null' ? null : value;
+  setFiltros({ ...filtros, [filterName]: parsedValue });
+};
+
 
   useEffect(() => {
     const fetchAfiliados = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/afiliados/?skip=${pagination.skip}&limit=${pagination.limit}`);
+          const queryParams = new URLSearchParams(filtros);
+
+    const response = await fetch(`http://localhost:8000/afiliados/?skip=${pagination.skip}&limit=${pagination.limit}&${queryParams.toString()}`);
         if (!response.ok) {
           throw new Error('Error al obtener los afiliados');
         }
@@ -75,7 +91,7 @@ const ListaAfiliados = ({ handleAfiliadoSeleccionado }: { handleAfiliadoSeleccio
     };
 
     fetchAfiliados();
-  }, [pagination]);
+  }, [pagination, filtros]);
 // console.log
   const handleNextPage = () => {
     const newSkip = pagination.skip + pagination.limit;
@@ -93,11 +109,11 @@ const ListaAfiliados = ({ handleAfiliadoSeleccionado }: { handleAfiliadoSeleccio
 
   return (
     <>
-    <UserDataDisplay/>
+    {/* <UserDataDisplay/> */}
     <div 
     id="lista-afiliados"
     className='border-2 flex flex-col w-full items-center justify-center h-auto py-8 space-y-2 bg-blue-100'>
-      <h1 className='text-green-600 text-left w-full border-2 font-bold text-3xl pt-6 px-20 mb-4'>Lista de Afiliados</h1>
+      <h1 className='text-slate-600 text-left w-full  font-bold text-3xl pt-6 px-20 mb-4'>Lista de Afiliados</h1>
       <div className="flex w-full space-x-20 px-20">
       <h2 className="w-56 text-3xl opacity-60 font-semibold">1. Selecciona los afiliados de tu listado para consultar la planilla en simple</h2>
       <div className='p-2 space-y-4 border-2 flex flex-col w-12/12 bg-white rounded-md shadow-md'>
@@ -108,7 +124,7 @@ const ListaAfiliados = ({ handleAfiliadoSeleccionado }: { handleAfiliadoSeleccio
    <label className="px-2 items-center flex"> Orden alfabético <span className="px-2 relative">
     <select 
 className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
-onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) })}>
+ onChange={(e) => handleFilterChange('orden', e.target.value)}>
   <option value="A-Z">A-Z</option>
   <option value="Z-A">Z-A</option>
 
@@ -118,7 +134,9 @@ onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) 
 </label>
   <label className="px-2 items-center flex"> EPS <span className="px-2"><select 
 className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
-onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) })}>
+ onChange={(e) => handleFilterChange('eps', e.target.value)}
+>
+  <option value="">SELECCIONAR</option>
   <option value="SOS EPS">SOS EPS</option>
   <option value="SALUD TOTAL EPS">SALUD TOTAL EPS</option>
   <option value="EPS SANITAS">EPS SANITAS</option>
@@ -131,7 +149,10 @@ onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) 
 </select></span></label>
   <label className="px-2 items-center flex"> AFP <span className="px-2"><select 
 className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
-onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) })}>
+ onChange={(e) => handleFilterChange('afp', e.target.value)}
+ >
+  <option value="">SELECCIONAR</option>
+  <option value="null">SIN PENSION</option>
   <option value="COLPENSIONES">COLPENSIONES</option>
   <option value="PROTECCION">PROTECCION</option>
   <option value="PORVENIR">PORVENIR</option>
@@ -142,11 +163,15 @@ onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) 
   <div className=" justify-between items-center flex p-4">
 
   <label className="px-2 flex items-center justify-center space-x-6"><span className="bg-blue-200  text-gray-700  px-2 space-x-4 shadow-md rounded-lg"
->Número de Cédula</span> <input className="w-44 border-2 rounded-full" type="text" id="numeroCedula"/> </label>
+>Número de Cédula</span> <input 
+ onChange={(e) => handleFilterChange('identificacion', e.target.value)}
+className="w-44 border-2 rounded-full" type="text" id="numeroCedula"/> </label>
   <label><span className="px-2">RIESGO</span>
 
   <select 
+  onChange={(e) => handleFilterChange('riesgo', e.target.value)}
 className=" border-2 rounded-full space-x-2 p-2 bg-[#fafafa]">
+  <option value="">SELECCIONAR</option>
   <option value="1">1</option>
   <option value="2">2</option>
   <option value="3">3</option>
@@ -193,7 +218,7 @@ className=" border-2 rounded-full space-x-2 p-2 bg-[#fafafa]">
         </div>
       </div>
       </div>
-      <div className='flex w-auto space-x-32 p-4 items-center justify-evenly'>
+      <div className='flex w-auto space-x-32 p-4 items-center ml-48 justify-evenly'>
         <span className='border-2 py-2 px-4 rounded-full border-[#000f] text-xl button-hovered' onClick={handlePreviousPage}>
           Anterior
         </span>
@@ -212,14 +237,17 @@ onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) 
         </span>
       </div>
     </div>
-    <div className="grid grid-cols-3">
-
+    <div className="flex text-center flex-col">
+<h2 className="font-bold text-3xl py-8">Estadísticas de mis afiliados</h2>
+<>Estas graficas amplian la informacion mostrada en la tabla de afiliados</>
+    <div className="grid grid-cols-3 pt-4 bg-[#fafafa] h-screen">
     <GraficaAfiliados datosAfiliados={afiliados}/>
     <GraficaAfiliados datosAfiliados={afiliados}/>
     <GraficaAfiliados datosAfiliados={afiliados}/>
     <GraficaAfiliados datosAfiliados={afiliados}/>
     <GraficaAfiliados datosAfiliados={afiliados}/>
     <GraficaAfiliados datosAfiliados={afiliados}/>
+    </div>
     </div>
   </>
   
@@ -320,12 +348,18 @@ const handleSubmitEmails = async () => {
     dispatch(removeAfiliado(id));
   };
 return (
-<div className="flex flex-col  w-full items-center justify-center my-auto  h-auto py-20 border-2 bg-gray-300">
+<div 
+id="seleccion-descarga"
+className="flex flex-col  bg-blue-100 w-full items-center justify-center my-auto  h-auto py-20  ">
+  <div 
+   
+  className="h-auto">
+    
   <h1 className="text-center  text-3xl mb-4">Documentos de Afiliados Seleccionados</h1>
   <h6 className="text-center text-xl mb-4">Este es el listado de cedulas que necesitas cargar en simple para descargar el listado de planillas en pdf correspondiente <br/> <span className="font-bold underline">presiona el boton de convertir a xls</span> para descargar un archivo de excel con el formato requerido</h6>
-  <div className="w-full h-screen border-2 cursor-pointer">
+  <div className="w-full h-auto  cursor-pointer">
     {selectedAfiliados.length > 0 && (
-      <div id="seleccion-descarga" className="">
+      <div className="">
         <div className="flex items-center justify-center space-x-4 bg-gray-300 p-2 border-b-2">
           <h2 className="w-1/2 text-center">Tipo de Documento</h2>
           <h2 className="w-1/2 text-center">Número de Documento</h2>
@@ -343,10 +377,12 @@ return (
           ))}
         </div>
         <div
-          onClick={handleConvertirAXLS}
-          className="flex items-center justify-center pb-20 mt-4 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105"
+
+          className="w-screen "
         >
-          <span className="border-2 w-auto flex justify-center rounded-full p-4 bg-green-300 text-gray-500">
+          <span 
+                    onClick={handleConvertirAXLS}
+          className="border-2 w-2/12 mx-auto flex justify-center rounded-full p-4 bg-green-300 text-gray-500 items-center  mt-4 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105">
             Convertir a xls
           </span>
         </div>
@@ -354,14 +390,20 @@ return (
     )}
 
 
-      <div className="flex flex-col  h-auto  text-center">
-        <div className="flex h-screenp-8 flex-col">
+    </div>
+  </div>
+      <div 
+      id="renombrar-planillas"
+      className="flex flex-col  h-auto  text-center">
+        <div 
+        
+        className="flex h-screen p-8 flex-col">
         {/* <h2>{`Aqui puedes cargar archivos para formatear el nombre y preparar envío de notificación de pago. Presiona aquí si estás seguro.`}</h2> */}
             <span>3. En esta seccion prepararás tus archivos. Debes usar el archivo obtenido en la pagina de simple con las planillas de tus afiliados   </span>
             <><br/> Usa el espacio para carga de imagenes (parte izquierda) y presiona el boton procesar los archivos</>
         <div 
-        id="renombrar-planillas"
-        className="items-center  text-center flex py-8 mx-auto h-full space-x-8 px-12 border-2 w-full">
+        
+        className="items-center  text-center flex py-8 mx-auto h-full space-x-8 px-12  w-full">
           <FileUploader
             onUpload={() => {}}
             name={'para renombrar'}
@@ -375,8 +417,10 @@ return (
         <div 
         id="enviar-correos"
         className=" text-center h-auto flex flex-col ">
-        <div className="flex h-screenp-8 flex-col">
-                      <div className="flex flex-col p">
+        <div className="flex h-screen p-8 flex-col">
+                      <div
+                      
+                      className="flex flex-col p">
             <span className="underline p-12">4. En esta seccion enviarás emails a tu listado de afiliados:   </span>
             <><br/> Usa el espacio para carga de imagenes (parte izquierda) y carga el archivo .zip con el listado de pdfs renombrados <br/>
             <span className="text-red-500 font-bold font-3xl">¡NO OLVIDES QUE DEBE CONTENER EL ARCHIVO DE EXCEL OBTENIDO EN EL PASO ANTERIOR! </span>
@@ -392,7 +436,6 @@ return (
         </div>
         </div>
       </div>
-    </div>
   </div>
 );
             }
