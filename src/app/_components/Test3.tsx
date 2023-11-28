@@ -6,6 +6,8 @@ import { RootState } from '../../../redux/store'; // Asegúrate de importar corr
 import { Upload } from './UploadFiles';
 import { FileUploader } from './DragAndDrop';
 import axios from'axios'
+import GraficaAfiliados from './GraficasAfiliados';
+import UserDataDisplay from './Profile';
 
 // Definición de la interfaz para representar un afiliado
 export interface Afiliado {
@@ -16,6 +18,7 @@ export interface Afiliado {
     tipo_identificacion: string;
     afp: string;
     estado: string;
+    eps:string;
   // ... Otras propiedades de Afiliado
 }
 
@@ -90,6 +93,7 @@ const ListaAfiliados = ({ handleAfiliadoSeleccionado }: { handleAfiliadoSeleccio
 
   return (
     <>
+    <UserDataDisplay/>
     <div 
     id="lista-afiliados"
     className='border-2 flex flex-col w-full items-center justify-center h-auto py-8 space-y-2 bg-blue-100'>
@@ -207,6 +211,15 @@ onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) 
           Siguiente
         </span>
       </div>
+    </div>
+    <div className="grid grid-cols-3">
+
+    <GraficaAfiliados datosAfiliados={afiliados}/>
+    <GraficaAfiliados datosAfiliados={afiliados}/>
+    <GraficaAfiliados datosAfiliados={afiliados}/>
+    <GraficaAfiliados datosAfiliados={afiliados}/>
+    <GraficaAfiliados datosAfiliados={afiliados}/>
+    <GraficaAfiliados datosAfiliados={afiliados}/>
     </div>
   </>
   
@@ -341,8 +354,8 @@ return (
     )}
 
 
-      <div className="flex flex-col border-2 bg-gray-100 h-auto  text-center">
-        <div className="flex h-screen border-2 border-green-200 p-8 flex-col">
+      <div className="flex flex-col  h-auto  text-center">
+        <div className="flex h-screenp-8 flex-col">
         {/* <h2>{`Aqui puedes cargar archivos para formatear el nombre y preparar envío de notificación de pago. Presiona aquí si estás seguro.`}</h2> */}
             <span>3. En esta seccion prepararás tus archivos. Debes usar el archivo obtenido en la pagina de simple con las planillas de tus afiliados   </span>
             <><br/> Usa el espacio para carga de imagenes (parte izquierda) y presiona el boton procesar los archivos</>
@@ -361,8 +374,8 @@ return (
         </div>
         <div 
         id="enviar-correos"
-        className="w-full items-center text-center h-auto flex flex-col mx-auto">
-        <div className="flex h-screen border-2 border-green-200 p-8 flex-col">
+        className=" text-center h-auto flex flex-col ">
+        <div className="flex h-screenp-8 flex-col">
                       <div className="flex flex-col p">
             <span className="underline p-12">4. En esta seccion enviarás emails a tu listado de afiliados:   </span>
             <><br/> Usa el espacio para carga de imagenes (parte izquierda) y carga el archivo .zip con el listado de pdfs renombrados <br/>

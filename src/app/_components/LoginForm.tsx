@@ -3,9 +3,11 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 // LoginForm.js (or any suitable name)
 import { useState } from 'react';
+// import useAuthGuard from '../auth/authGuard';
 
 const LoginForm = () => {
     const router=useRouter()
+    
     const [username, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -22,7 +24,7 @@ const LoginForm = () => {
   const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
-const response = await axios.post(`https://localhost:8000auth/token`, formData);  // https://cyc-backend.onrender.com/auth/token
+const response = await axios.post(`http://localhost:8000/token`, formData);  // https://cyc-backend.onrender.com/auth/token
 
       if (response.status === 200) {
         const data = await response.data;

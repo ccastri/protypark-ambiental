@@ -1,20 +1,32 @@
-# Dockerfile for Next.js app
+# Etapa de construcción (Build Stage)
+FROM node:lts-alpine AS build
 
-# Usa una imagen base con Node.js
-FROM node:latest
-
-# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
-
 
 # Copia los archivos del proyecto al contenedor
 COPY . .
 
-# Instala las dependencias usando Yarn
-RUN yarn install
+# Limpia la caché de npm
+RUN npm cache clean --force
 
-# Expone el puerto 3000
+# Instala las dependencias y construye la aplicación Next.js
+RUN npm install --legacy-peer-deps
+RUN npm run build
+
+# Etapa de producción (Production Stage)
+FROM node:lts-alpine AS production
+
+WORKDIR /app
+
+# Copia solo los archivos necesarios para la aplicación compilada
+COPY --from=build /app/package.json /app/package-lock.json ./
+COPY --from=build /app/.next ./.next
+
+# Instala solo las dependencias de producción
+RUN npm install --only=production --legacy-peer-deps
+
+# Expone el puerto 3000 (puedes eliminar esta línea si no es necesario)
 EXPOSE 3000
 
-# Comando para iniciar la aplicación Next.js con Yarn
-CMD ["yarn", "dev"]
+# Comando para iniciar la aplicación Next.js en modo producción
+CMD ["npm", "start"]
