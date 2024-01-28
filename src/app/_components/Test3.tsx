@@ -8,6 +8,7 @@ import { FileUploader } from './DragAndDrop';
 import axios from'axios'
 import GraficaAfiliados from './GraficasAfiliados';
 import UserDataDisplay from './Profile';
+// import { selectAuthUser } from '../../../redux/authSlice';
 
 // Definición de la interfaz para representar un afiliado
 export interface Afiliado {
@@ -45,10 +46,18 @@ export interface DocumentoAfiliado {
 //   );
 // };
 
+
+
 const ListaAfiliados = ({ handleAfiliadoSeleccionado }: { handleAfiliadoSeleccionado: (id: number, tipoIdentificacion: string, identificacion:number, afp: string) => void }) => {
   const [afiliados, setAfiliados] = useState<Afiliado[]>([]);
   const [pagination, setPagination] = useState({ skip: 0, limit: 5 });
   const [combinedAfiliados, setCombinedAfiliados] = useState<Afiliado[]>([]);
+  // const dispatch = useDispatch()
+  //  const user = useSelector(selectAuthUser);
+
+  // Extrae el campo role del objeto user
+  // const role = user?.role || 'No Role';
+
     const [totalAfiliados, setTotalAfiliados] = useState(0);
 const [filtros, setFiltros] = useState<any>({
   orden: '',
@@ -110,6 +119,8 @@ const handleFilterChange = (filterName: string, value: string) => {
   return (
     <>
     {/* <UserDataDisplay/> */}
+<>Probando hot  reload 2.0 por que no refresca</>
+    {/* <>{user?.role}</> */}
     <div 
     id="lista-afiliados"
     className='border-2 flex flex-col w-full items-center justify-center h-auto py-8 space-y-2 bg-blue-100'>

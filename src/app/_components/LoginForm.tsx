@@ -3,11 +3,14 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 // LoginForm.js (or any suitable name)
 import { useState } from 'react';
+// import { signUpSuccess } from '../../../redux/authSlice';
+// import { useDispatch } from 'react-redux';
 // import useAuthGuard from '../auth/authGuard';
 
 const LoginForm = () => {
     const router=useRouter()
-    
+      // const dispatch = useDispatch();
+
     const [username, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,7 +33,9 @@ const response = await axios.post(`http://localhost:8000/token`, formData);  // 
         const data = await response.data;
         // Store token in localStorage or sessionStorage
         localStorage.setItem('accessToken', data.access_token);
-        router.push('/')
+        // dispatch(signUpSuccess({ ...data, role: data.role}));
+        console.log(data)
+        // router.push('/')
         // Redirect or perform other actions for logged-in users
       } else {
         // Handle login failure

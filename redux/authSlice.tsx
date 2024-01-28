@@ -2,18 +2,20 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface User{ 
   // id: number,
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  username: string;
+  // firstName?: string;
+  // lastName?: string;
+  // phoneNumber?: string;
+  // username?: string;
   email: string;
   password: string;
-  confirmPassword: string;
-  neighborhood: string;
+  // confirmPassword: string;
+  // neighborhood?: string;
   token: string | null
-  city: string;
-  department: string;
-  tos_is_clicked: boolean;
+  role: string
+  // city?: string;
+  // department?: string;
+  // tos_is_clicked?: boolean;
+  // role: string;
   // dateOfExpedition: Date;
   // dateOfBirth: Date;
   // isAuth:boolean,
