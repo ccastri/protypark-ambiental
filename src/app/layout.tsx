@@ -3,6 +3,7 @@ import { Raleway } from 'next/font/google'
 import './globals.css'
 import ChatBubble from './_components/ChatBubble'
 import Header from './_components/Header'
+import Footer from './_components/Footer'
 
 const raleway = Raleway({ subsets: ['latin'] })
 // Raleway
@@ -23,6 +24,7 @@ export default function RootLayout({
         
         {children}
            <ChatBubble />
+        <Footer/>
       </body>
     </html>
   )

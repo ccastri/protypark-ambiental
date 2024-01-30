@@ -1,82 +1,36 @@
-// 'use client'
-
-// import DocumentosAfiliados from './_components/Test3';
-// import TuComponentePrincipal from './_components/Test3';
-// import LandingPage from './_components/LandingPage'
-// // import DocumentosAfiliados from './_components/SelectDocuments';
-// import { Provider } from 'react-redux';
-// import { store } from '../../redux/store'; // Importa tu store aquí
-// import { useEffect, useState } from 'react'
-// import axios from 'axios';
-// import ProtectedRoute from './ProtectedRoute';
-
-// const Page = () => {
-
-// const getUser= axios.get('localhost/')
-// const getRole=(user.role)=>{}
-// const [user, setUser] = useState(null);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const response = await axios.get('http://localhost/', {
-//           headers: {
-//             Authorization: `Bearer ${YOUR_ACCESS_TOKEN}`, // Replace with your actual access token
-//           },
-//         });
-//         setUser(response.data);
-//       } catch (error) {
-//         // Handle error, e.g., user not authenticated
-//         console.error('Error fetching user data:', error);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-
-//   return (
-//     <main>
-//       {/* <Home /> */}
-//       <Provider store={store}>
-//         {/* Rutas protegidas*/}
-        
-//         {user && (
-//           // Check user role and render components accordingly
-//           user.role === 'ADMIN' ? <TuComponentePrincipal /> : <LandingPage />
-//         )}
-//       </Provider>
-//     </main>
-//   );
-// };
-
-// export default Page;
-
-
 'use client'
-
-import DocumentosAfiliados from './_components/Test3';
-import TuComponentePrincipal from './_components/Test3';
-// import DocumentosAfiliados from './_components/SelectDocuments';
-import { Provider } from 'react-redux';
-import { store } from '../../redux/store'; // Importa tu store aquí
-import { useEffect } from 'react'
+// import Image from 'next/image'
+import React, { useState } from 'react'
+import HeroLanding from './_components/HeroLanding'
+import HostNewClients from './_components/HostNewClients'
+import Tutorial from './_components/Tutorial'
+import About from './_components/About'
+import ContactForm from './_components/ContactForm'
+import PlanCard, { plans } from './_components/PlanCard'
+import { AccountBalanceWalletOutlined } from '@mui/icons-material'
+import Footer from './_components/Footer'
+import NewClientForm from './_components/NewClientForm'
 
 const Page = () => {
-
-
-
-
+  // const newClientPlans = plans.filter(plan => plan.isNewClient)[0];
+  // console.log(newClientPlans)
   return (
-    <main>
-      {/* <Home /> */}
+    <div id='landing' className='space-y-10 pb-28  text-[#e2e2e2] bg-gray-700  '>
+      <HeroLanding/>
+      <HostNewClients/>
+      <Tutorial/>
+      <About/>
+      <ContactForm/>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 pt-20 mx-auto">
+          {plans.map((plan, index) => (<PlanCard key={index}  {...plan} />))}
+        </div>
+          <NewClientForm />
       
-      <Provider store={store}>
-        {/* Rutas protegidas*/}
-        <TuComponentePrincipal />
-      </Provider>
-    </main>
-  );
-};
 
-export default Page;
+    </div>
+  )
+}
+
+export default Page
+
+

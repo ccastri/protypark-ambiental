@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRouter } from 'next/navigation'
+import { Mail, MailOutline, PhoneIphone } from '@mui/icons-material';
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false);
@@ -48,7 +49,13 @@ const Header = () => {
   return (
     // <div className='fixed h-24'>
     <nav className={`${isScrolled && 'bg-[#f1f1f1]  '}  fixed  w-full top-0 z-50 `}>
-      <div className="w-screen right-0  py-4 px-5"><MenuIcon className ={`${isScrolled&& ''}`}onClick={()=>setIsOpen(!isOpen)}/></div>
+      <div className="w-screen right-0 flex justify-between  py-4 px-5">
+        <MenuIcon className ={`${isScrolled&& ''}`}onClick={()=>setIsOpen(!isOpen)}/>
+        <div className='flex hidden md:block px-4 space-x-4'>
+          <span><PhoneIphone/> 3105133101</span>
+        <span><MailOutline/> cycaccionlegalsas@gmail.com</span>
+        </div>
+        </div>
       <div  className={`w-screen ${
           isOpen ? 'ease-in-out h-screen flex space-y-6 opacity-100' : 'h-0 top-0 -z-50 opacity-0'
         } items-center mx-auto py-4 z-50 flex-col top-10  bg-[#fafafa] transition-all duration-200  absolute left-0 right-0`}>

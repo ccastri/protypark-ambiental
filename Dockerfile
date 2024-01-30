@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Limpia la caché de npm
-RUN npm cache clean --force
+#RUN npm cache clean --force
 
 # Instala las dependencias y construye la aplicación Next.js
 RUN npm install --legacy-peer-deps
@@ -15,7 +15,6 @@ RUN npm run build
 
 # Etapa de producción (Production Stage)
 FROM node:lts-alpine AS production
-# FROM node:lts-alpine AS development
 
 WORKDIR /app
 

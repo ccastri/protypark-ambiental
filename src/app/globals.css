@@ -33,7 +33,7 @@
 
 .button-hovered {
   cursor: pointer;
-  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out;
   /* Apply transitions to transform and opacity */
 }
 
