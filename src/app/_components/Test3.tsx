@@ -248,10 +248,10 @@ onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) 
         </span>
       </div>
     </div>
-    <div className="flex text-center flex-col">
+    <div className="flex h-full flex-col">
 <h2 className="font-bold text-3xl py-8">Estadísticas de mis afiliados</h2>
 <>Estas graficas amplian la informacion mostrada en la tabla de afiliados</>
-    <div className="grid grid-cols-3 pt-4 bg-[#fafafa] h-screen">
+    <div className="grid grid-cols-3 h-full pt-4 bg-[#fafafa] ">
     <GraficaAfiliados datosAfiliados={afiliados}/>
     <GraficaAfiliados datosAfiliados={afiliados}/>
     <GraficaAfiliados datosAfiliados={afiliados}/>

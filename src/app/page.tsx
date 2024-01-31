@@ -7,15 +7,13 @@ import Tutorial from './_components/Tutorial'
 import About from './_components/About'
 import ContactForm from './_components/ContactForm'
 import PlanCard, { plans } from './_components/PlanCard'
-import { AccountBalanceWalletOutlined } from '@mui/icons-material'
-import Footer from './_components/Footer'
 import NewClientForm from './_components/NewClientForm'
 
 const Page = () => {
   // const newClientPlans = plans.filter(plan => plan.isNewClient)[0];
   // console.log(newClientPlans)
   return (
-    <div id='landing' className='space-y-10 pb-28  text-[#e2e2e2] bg-gray-700  '>
+    <div id='landing' className='space-y-10   text-[#e2e2e2] bg-gray-700  '>
       <HeroLanding/>
       <HostNewClients/>
       <Tutorial/>

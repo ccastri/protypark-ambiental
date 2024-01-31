@@ -36,7 +36,28 @@ const GraficaAfiliados: React.FC<GraficaAfiliadosProps> = ({ datosAfiliados }) =
           label: 'Cantidad de Afiliados por EPS',
           data: data,
           backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        },  {
+          label: 'Cantidad de Afiliados por ARL',
+          data: data,
+          backgroundColor: 'rgba(54, 162, 235, 0.6)',
         },
+        {
+          label: 'Cantidad de Afiliados por Riesgo',
+          data: data,
+          backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        },
+        {
+          label: 'Cantidad de Afiliados por Caja de Compensacion',
+          data: data,
+          backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        },
+        {
+          label: 'Cantidad de Cotizantes a pension por fondo',
+          data: data,
+          backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        },
+
+
       ],
     };
 
@@ -44,7 +65,7 @@ const GraficaAfiliados: React.FC<GraficaAfiliadosProps> = ({ datosAfiliados }) =
   }, [datosAfiliados]);
 
   return (
-    <div>
+    <div className='h-full'>
       {dataChart && (
         <Bar
           data={dataChart}
@@ -61,6 +82,7 @@ const GraficaAfiliados: React.FC<GraficaAfiliadosProps> = ({ datosAfiliados }) =
             },
           }}
         />
+     
       )}
     </div>
   );
