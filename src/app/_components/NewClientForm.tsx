@@ -312,7 +312,7 @@ export default function NewClientForm() {
      
 
       // #747a80, #00619E,  #C29A95, #E0C4A0, #3B2F3C  #0D202F
-      <div className='h-full '>
+      <div id="new-client-form" className='h-full '>
 <div className="relative mt-16 w-100  h-screen bg-[#fafafa]   xl:flex-col transition-all duration-200 scrollbar-track-transparent overflow-y-scroll scrollbar-thin scrollbar-thumb-[#747a80] scrollbar-thumb-rounded-md">
 
   <div className=" w-full absolute h-screen  bg-[#fafafa] opacity- flex items-center transition-all duration-200 transform -skew-y-12 mb-32 z-40 overflow-y-hidden "  >

@@ -119,20 +119,20 @@ const handleFilterChange = (filterName: string, value: string) => {
   return (
     <>
     {/* <UserDataDisplay/> */}
-<>Probando hot  reload 2.0 por que no refresca</>
+{/* <>Probando hot  reload 2.0 por que no refrescaasdssfkfsa</> */}
     {/* <>{user?.role}</> */}
     <div 
     id="lista-afiliados"
-    className='border-2 flex flex-col w-full items-center justify-center h-auto py-8 space-y-2 bg-blue-100'>
-      <h1 className='text-slate-600 text-left w-full  font-bold text-3xl pt-6 px-20 mb-4'>Lista de Afiliados</h1>
-      <div className="flex w-full space-x-20 px-20">
-      <h2 className="w-56 text-3xl opacity-60 font-semibold">1. Selecciona los afiliados de tu listado para consultar la planilla en simple</h2>
+    className='border-2 text-gray-900 flex flex-col w-full items-center justify-center h-auto py-8 space-y-2 bg-[#E2E2E2]'>
+      <h1 className='text-gray-900 text-left w-full  font-bold text-3xl text-center pt-6 px-20 mb-4'>Lista de Afiliados</h1>
+      <div className="flex flex-col w-full ">
+      <h2 className="w-auto text-gray-900 text-xl  font-semibold px-6 text-center pb-12">1. Selecciona los afiliados de tu listado para consultar la planilla en simple</h2>
       <div className='p-2 space-y-4 border-2 flex flex-col w-12/12 bg-white rounded-md shadow-md'>
         <div className='p-2 space-y-4 border-2 flex  flex-col w-12/12'>
-          <h2 className='text-center text-red-600 font-semibold text-xl'>Informacion Afiliados</h2>
+          <h2 className='text-center text-gray-900 font-semibold text-xl'>Informacion Afiliados</h2>
           <p>Para buscar más rápido puedes usar los siguientes filtros de busqueda:</p>
-<div className="flex justify-between space-x-8">  
-   <label className="px-2 items-center flex"> Orden alfabético <span className="px-2 relative">
+<div className="flex flex-col space-y-2 md:flex-row justify-evenly space-x-8">  
+   <label className="px-2 items-center flex justify-between"> Orden alfabético <span className="px-2 relative">
     <select 
 className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
  onChange={(e) => handleFilterChange('orden', e.target.value)}>
@@ -143,7 +143,7 @@ className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
 </span>
     
 </label>
-  <label className="px-2 items-center flex"> EPS <span className="px-2"><select 
+  <label className="px-2 items-center flex justify-between"> EPS <span className="px-2"><select 
 className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
  onChange={(e) => handleFilterChange('eps', e.target.value)}
 >
@@ -158,7 +158,7 @@ className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
   <option value="EPS-S COOSALUD">EPS-S COOSALUD</option>
   {/* Add more options as needed */}
 </select></span></label>
-  <label className="px-2 items-center flex"> AFP <span className="px-2"><select 
+  <label className="px-2 items-center flex justify-between"> AFP <span className="px-2"><select 
 className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
  onChange={(e) => handleFilterChange('afp', e.target.value)}
  >
@@ -171,9 +171,9 @@ className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
 </select></span></label>
   {/* <label className="px-2 flex"> <input className="pl-2" type="checkbox" id="riesgo"/> <span className="px-2">RIESGO</span></label> */}
   </div>
-  <div className=" justify-between items-center flex p-4">
+  <div className=" justify-between  flex flex-col space-y-4 md:space-y-0 md:flex-row p-4">
 
-  <label className="px-2 flex items-center justify-center space-x-6"><span className="bg-blue-200  text-gray-700  px-2 space-x-4 shadow-md rounded-lg"
+  <label className="px-2 flex items-center space-x-6"><span className="bg-blue-200  text-gray-700  px-2 space-x-4 shadow-md rounded-lg"
 >Número de Cédula</span> <input 
  onChange={(e) => handleFilterChange('identificacion', e.target.value)}
 className="w-44 border-2 rounded-full" type="text" id="numeroCedula"/> </label>
@@ -199,8 +199,8 @@ className=" border-2 rounded-full space-x-2 p-2 bg-[#fafafa]">
                 <th className="border-2 border-gray-700 px-4">Tipo <br/> Documento</th>
                 <th className="border-2 border-gray-700 px-4">Identificación</th>
                 <th className="border-2 border-gray-700 px-4">AFP</th>
-                <th className="border-2 border-gray-700 px-4">Estado</th>
-                <th className="border-2 border-gray-700 px-4">Acciones</th>
+                <th className="border-2 hidden md:table-cell border-gray-700 px-4">Estado</th>
+                <th className="border-2 hidden md:table-cell border-gray-700 px-4">Acciones</th>
                 
               </tr>
             </thead>
@@ -248,10 +248,10 @@ onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) 
         </span>
       </div>
     </div>
-    <div className="flex h-full flex-col">
-<h2 className="font-bold text-3xl py-8">Estadísticas de mis afiliados</h2>
+    <div className="flex  items-center h-full flex-col">
+<h2 className="font-bold text-3xl py-8 ">Estadísticas de mis afiliados</h2>
 <>Estas graficas amplian la informacion mostrada en la tabla de afiliados</>
-    <div className="grid grid-cols-3 h-full pt-4 bg-[#fafafa] ">
+    <div className="grid  grid-cols-1 md:grid-cols-2 max-w-4xl space-x-6 h-full pt-4 bg-[#fafafa] ">
     <GraficaAfiliados datosAfiliados={afiliados}/>
     <GraficaAfiliados datosAfiliados={afiliados}/>
     <GraficaAfiliados datosAfiliados={afiliados}/>
@@ -361,13 +361,19 @@ const handleSubmitEmails = async () => {
 return (
 <div 
 id="seleccion-descarga"
-className="flex flex-col  bg-blue-100 w-full items-center justify-center my-auto  h-auto py-20  ">
+className="flex flex-col  bg-gray-900 text-[#E2E2E2]  items-center justify-center my-auto  h-auto py-20  ">
   <div 
    
-  className="h-auto">
+  className="h-auto w-full max-w-4xl">
     
   <h1 className="text-center  text-3xl mb-4">Documentos de Afiliados Seleccionados</h1>
-  <h6 className="text-center text-xl mb-4">Este es el listado de cedulas que necesitas cargar en simple para descargar el listado de planillas en pdf correspondiente <br/> <span className="font-bold underline">presiona el boton de convertir a xls</span> para descargar un archivo de excel con el formato requerido</h6>
+  <h6 className="text-cente max-w-4-xl mx-auto px-6 mb-4">Cuando desees descargar multiples planillas de Simple: descarga el siguiente listado de cedulas e importalo en simple para obtener y descargar el listado de planillas correspondientes.
+  <br/>  
+  <br/> 
+  <span className="font-bold mt-4">¡IMPORTANTE! presionar botón para obtener un achivo .xls: </span> 
+  Este formato será requerido por el sistema de Simple
+  </h6>
+  
   <div className="w-full h-auto  cursor-pointer">
     {selectedAfiliados.length > 0 && (
       <div className="">
@@ -405,16 +411,16 @@ className="flex flex-col  bg-blue-100 w-full items-center justify-center my-auto
   </div>
       <div 
       id="renombrar-planillas"
-      className="flex flex-col  h-auto  text-center">
+      className="flex flex-col  h-full  text-center">
         <div 
         
-        className="flex h-screen p-8 flex-col">
+        className="flex h-screen  flex-col">
         {/* <h2>{`Aqui puedes cargar archivos para formatear el nombre y preparar envío de notificación de pago. Presiona aquí si estás seguro.`}</h2> */}
-            <span>3. En esta seccion prepararás tus archivos. Debes usar el archivo obtenido en la pagina de simple con las planillas de tus afiliados   </span>
-            <><br/> Usa el espacio para carga de imagenes (parte izquierda) y presiona el boton procesar los archivos</>
+            <span className='mx-auto  w-full '>3. En esta seccion prepararás tus archivos. Debes usar el archivo obtenido en la pagina de simple con las planillas de tus afiliados
+            <br/> Usa el espacio para carga de imagenes (parte izquierda) y presiona el boton procesar los archivos</span>
         <div 
         
-        className="items-center  text-center flex py-8 mx-auto h-full space-x-8 px-12  w-full">
+        className="items-center  text-center flex flex-col py-8 mx-auto h-full space-x-8 px-12  w-full">
           <FileUploader
             onUpload={() => {}}
             name={'para renombrar'}
@@ -428,10 +434,10 @@ className="flex flex-col  bg-blue-100 w-full items-center justify-center my-auto
         <div 
         id="enviar-correos"
         className=" text-center h-auto flex flex-col ">
-        <div className="flex h-screen p-8 flex-col">
+        <div className="flex h-full p-8 flex-col">
                       <div
                       
-                      className="flex flex-col p">
+                      className="flex py-20 flex-col p">
             <span className="underline p-12">4. En esta seccion enviarás emails a tu listado de afiliados:   </span>
             <><br/> Usa el espacio para carga de imagenes (parte izquierda) y carga el archivo .zip con el listado de pdfs renombrados <br/>
             <span className="text-red-500 font-bold font-3xl">¡NO OLVIDES QUE DEBE CONTENER EL ARCHIVO DE EXCEL OBTENIDO EN EL PASO ANTERIOR! </span>

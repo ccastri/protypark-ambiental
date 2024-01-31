@@ -33,7 +33,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onUpload, handleClic
   );
 
   return (
-    <div className="flex h-full space-x-12  w-full">
+    <div className="flex flex-col h-full space-y-4 items-center  w-full">
       {/* File uploader */}
       <div className="bg-gradient-to-br from-blue-100 to-green-100 text-gray-800 p-20 items-center group justify-center my-auto mx-auto w-10/12 shadow-md rounded-lg cursor-pointer h-auto transition duration-300 ease-in-out transform hover:scale-105 hover:text-blue-900 hover:shadow-lg hover:from-blue-200 hover:to-green-200">
         <div {...getRootProps()} className="flex flex-col justify-center px-8 items-center h-full ">
@@ -55,7 +55,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onUpload, handleClic
         className=" group bg-gradient-to-br h-20 bottom-0 py-20 px-2 opacity-60 from-blue-200 to-green-200 text-gray-800  items-center justify-center my-auto mx-auto w-10/12 shadow-md rounded-lg cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 hover:filter hover:brightness-110 hover:text-xl hover:text-gray-600 hover:opacity-100 group"
         onClick={handleClick}
       >
-        <span className='text-gray-700 text-center  group-hover:text-gray-700 text-xl font-bold transition-all duration-400 transform group-hover:underline w-0 group-hover:w-full'>¡Presiona aquí</span> {name}
+        <span className='text-gray-700 text-center  group-hover:text-gray-700 text-xl font-bold transition-all duration-400 transform group-hover:underline w-0 group-hover:w-full'>¡Presiona aquí</span>
       </span>
     </div>
   );
