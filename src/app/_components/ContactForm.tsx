@@ -3,16 +3,18 @@ import React from 'react'
 
 const ContactForm = () => {
   return (
-<div className="relative py-24">
+<div 
+id='contact-form'
+className="relative py-24">
       <div className="absolute inset-0">
         <Image
-          src="/cs-bg.jpeg"
+          src="/contact-bg.jpeg"
           alt="Background Image"
           layout="fill"
           objectFit="cover"
           quality={100}
         />
-        <div className="bg-gray-800 bg-opacity-75 absolute inset-0"></div>
+        <div className="bg-[#e2e2e2] bg-opacity-40 absolute inset-0"></div>
       </div>
       <div className="max-w-4xl mx-auto relative z-10 px-6">
         <h2 className="text-3xl font-bold text-white mb-4">Contáctanos</h2>
@@ -29,7 +31,7 @@ const ContactForm = () => {
             <label htmlFor="message" className="block text-white mb-2">Mensaje</label>
             <textarea id="message" name="message" className="w-full bg-[#FAFAFA] rounded-full py-2 px-4 text-white"></textarea>
           </div>
-          <button type="submit" className="bg-[#fafafa] border-blue-600 hover:bg-blue-600 hover:text-white py-2 px-4 rounded-full">Enviar Mensaje</button>
+          <button type="submit" className="bg-[#fafafa] text-gray-900 border-blue-600 hover:bg-blue-600 hover:text-white py-2 px-4 rounded-full">Enviar Mensaje</button>
         </form>
       </div>
     </div>

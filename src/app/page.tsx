@@ -8,21 +8,29 @@ import About from './_components/About'
 import ContactForm from './_components/ContactForm'
 import PlanCard, { plans } from './_components/PlanCard'
 import NewClientForm from './_components/NewClientForm'
+import Doughnut from './_components/Doughnut'
+import ProductPage from './_components/ProductWeb'
+import Slider from './_components/Slider'
 
 const Page = () => {
   // const newClientPlans = plans.filter(plan => plan.isNewClient)[0];
   // console.log(newClientPlans)
   return (
-    <div id='landing' className='space-y-10   text-[#e2e2e2] bg-gray-700  '>
+    <div id='landing' className=' max-w-screen text-[#e2e2e2] bg-green-700  '>
       <HeroLanding/>
+      <Doughnut/>
+      {/* <ProductPage/> */}
       <HostNewClients/>
+      <Slider/>
       <Tutorial/>
       <About/>
-      <ContactForm/>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 pt-20 mx-auto">
+        <div 
+        id="products"
+        className="grid grid-cols-1 pb-16 md:grid-cols-2 lg:grid-cols-4 gap-8  pt-20 mx-auto">
           {plans.map((plan, index) => (<PlanCard key={index}  {...plan} />))}
         </div>
-          <NewClientForm />
+      <ContactForm/>
+          {/* <NewClientForm /> */}
       
 
     </div>

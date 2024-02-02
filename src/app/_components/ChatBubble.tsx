@@ -28,7 +28,7 @@ const ChatBubble = () => {
   };
 
   return (
-    <div className="group " >
+    <div className="group z-50   " >
       {/* Chat bubble */}
       <Tooltip text="¿Necesitas ayuda? Conversa con Cupertino y recibe ayuda">
         <div className="fixed bottom-5 right-5 bg-blue-500 text-white w-12 h-12 rounded-full flex items-center justify-center cursor-pointer" onClick={toggleChatModal}>

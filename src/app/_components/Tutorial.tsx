@@ -1,42 +1,67 @@
-import { AirlineSeatFlat, AirlineSeatReclineExtraOutlined, FileCopyOutlined, MonetizationOnOutlined, PhoneDisabledOutlined, SupportAgentOutlined } from '@mui/icons-material';
+import { AirlineSeatFlat, AirlineSeatReclineExtraOutlined, CloudSync, FileCopyOutlined, GrassOutlined, MonetizationOnOutlined, PhoneDisabledOutlined, RecyclingOutlined, SupportAgentOutlined, WindPowerOutlined } from '@mui/icons-material';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import React from 'react'
 
 const Tutorial = () => {
   return (
-    <div className='flex h-full flex-col max-w-4xl mx-auto p-6'>
-      <h2 className='text-gray-600 pb-4 font-bold  text-center text-3xl'>¿Quieres Comenzar?</h2>
-      <div className='space-y-6'>
+    <div 
+    id="services"
+    className='flex pb-28 h-full flex-col w-full text-[#E2E2E2]  mx-auto p-6'>
+      <h2 className='pb-4 font-bold  text-center text-3xl'>Nuestras lineas de negocio</h2>
+      <div className='space-y-28 mx-auto max-w-4xl'>
 
-      <div>
-      <ConnectWithoutContactIcon className='text-green-600' sx={{ width: 80, height:80}}/>
-      <h3 className="font-bold py-2 text-lg">Contactanos</h3>
-      <>Escribiendonos a Whatsapp es la forma mas rápida de contactar a un asesor.
-        También puedes diligenciar el formulario y acelerar el proceso aun más
-      </>
+      <div className='relative  w-full'>
+      {/* <span className="text-[120px] right-0 flex items-start justify-end w-full font-semibold opacity-30 mb-20 absolute">
+              {"1)"}
+            </span> */}
+      <GrassOutlined className='opacity-20 justify-end items-end   w-full  flex text-slate-200 absolute' sx={{ width: 150, height:200}}/>
+      <h3 className="font-bold py-2 items-end  justify-end text-lg">Cultivo de cepas y diseño de fibroreactores</h3>
+      <p>Contamos con guías de acondicionamiento de medios de cultivo 
+      desarrolladas por nuestros especialistas en ciencia, tecnología, desarrollo e innovacion en ingenieria
+      </p>
+      <span className=" font-bold text-xl">¡Te asesoramos para que inicies cuanto antes!</span>
       </div>
 
-      <div>
-      <FileCopyOutlined className='text-gray-600' sx={{ width: 80, height:80}}/>
-      <h3 className="font-bold py-2 text-lg">Envianos tu informacion</h3>
-      <>Hazlo desde cualquier lugar y en cualquier momento
-      el sistema trabaja 24/7 para nuestros clientes. Envianos los archivos adjuntos por Whatsapp o al correo electrónico de la compañia 
-      </>
+      <div className='relative w-full'>
+        {/* <span className="text-[120px] right-0 flex items-start justify-end border-2 border-black w-full font-semibold opacity-20 absolute">
+                {"2)"}
+        </span> */}
+      <WindPowerOutlined className='opacity-20 justify-end items-end   w-full  flex text-slate-200 absolute' sx={{ width: 150, height:200}}/>
+      {/* <CloudSync className='opacity-20 justify-end items-end   w-full  flex text-slate-200 absolute' sx={{ width: 150, height:200}}/> */}
+      <h3 className="font-bold py-2 text-lg">Sistemas de purificación de oxigeno</h3>
+      <p>
+      Las microalgas cuidan de nuestra salud y son una gran oportunidad que nos brinda la naturaleza para reducir nuestra huella de carbono.
+      Durante su ciclo de vida se alimentan del dioxido de carbono y la contaminación de nuestras cuidades y producen oxigeno limpio 
+      </p>
+      <span className=" font-bold text-xl">¡Te ofrecemos Salud y vida!. ¿Qué esperas?</span>
       </div>
 
-      <div>
-      <MonetizationOnOutlined className='text-green-600' sx={{ width: 80, height:80}}/>
-      <h3 className="font-bold py-2 text-lg">Contactanos</h3>
-      <>El pago también lo puedes realizar en linea. Usa tu canal favorito y envianos el soporte de confirmación
-      </>
-      </div>
-      </div>
-<div className='space-y-2 flex pt-6 flex-col'>
+      <div className='relative w-full'>
+    
+          {/* <span className="text-[120px] right-0 flex   items-start justify-end border-2 border-black w-full font-semibold opacity-10 absolute">
+              {"3)"}
+            </span> */}
+          
 
-      <span className='flex-col'><AirlineSeatReclineExtraOutlined className='text-blue-500'/> Dile adios a largas horas de espera</span>
-      <span className='flex-col'><PhoneDisabledOutlined className='text-blue-500'/> Olvidate de pasar horas en el telefono</span>
-      <span className='flex-col'><SupportAgentOutlined className='text-blue-500'/> Comunicate desde tu casa o trabajo o en cualquier momento por WhatsApp</span>
-</div>
+      <RecyclingOutlined className='opacity-20 justify-end items-end   w-full  flex text-slate-200 absolute' sx={{ width: 150, height:200}}/>
+      <h3 className="font-bold py-2 text-lg">Aprovechamiento de residuos</h3>
+      <p>Nuestro modelo de negocio satisface los parametros de la economía 
+      circular, por lo el desperdicio de nuestro producto sirve como 
+      materia prima para diversos procesos productivos
+      </p>
+      <span className=" font-bold text-xl">comestibles, cosméticos y mucho más... ¡PROXIMAMENTE!</span>
+      </div>
+      </div>
+{/* <div className='relative space-y-20 text-base flex  justify-center mt-36 max-w-4xl mx-auto flex-col '>
+
+  <span className='flex-col'><AirlineSeatReclineExtraOutlined sx={{ width: 80, height:80}} className='text-[#E2E2E2]'/> Dile adios a largas horas de espera</span>
+
+          <span className='flex-col'><PhoneDisabledOutlined sx={{ width: 80, height:80}}className='text-[#E2E2E2]]'/> Olvidate de pasar horas en el telefono</span>
+        
+      <span className='flex-col'><SupportAgentOutlined  sx={{ width: 80, height:80}} className='text-[#E2E2E2]]'/> Comunicate desde tu casa o trabajo o en cualquier momento por WhatsApp</span>
+
+        
+    </div> */}
     </div>
   )
 }
