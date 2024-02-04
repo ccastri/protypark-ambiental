@@ -6,42 +6,46 @@ import { usePathname } from 'next/navigation'
 import { Mail, MailOutline, PhoneIphone } from '@mui/icons-material';
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const router = useRouter()
   const currentPath= usePathname()
   const getMenuOptions = () => {
-    switch (currentPath) {
-      case '/':
-        return [
-          {
-            path: '/',
-            items: [
-              { label: 'Nuestros Sistemas', section: 'graphics' },
-              { label: 'Nuestras Cepas', section: 'strains' },
-              { label: 'Nuestros Servicios', section: 'services' },
-              { label: 'Sobre Nosotros', section: 'about' },
-              { label: 'Productos', section: 'products' },
-              { label: 'Contáctanos', section: 'contact-form' }
+    // switch (currentPath) {
+      // case '/':
+            return [
+
+              
+                
+            {
+              label: 'Home',
+              path: '/',
+              items: [
+              { label: 'Nuestros Sistemas', section: '/#graphics' },
+              { label: 'Nuestras Cepas', section: '/#strains' },
+              { label: 'Nuestros Servicios', section: '/#services' },
+              { label: 'Sobre Nosotros', section: '/#about' },
+              { label: 'Productos', section: '/#products' },
+              { label: 'Contáctanos', section: '/#contact-form' }
             ]
-          }
-        ];
-      case '/projects/shareflow':
-        return [
+          },
+        // ];
+      // case '/projects/shareflow':
+        // return [
           {
+            label:'Proyectos', 
             path: '/projects/shareflow',
             items: [
-              { label: 'Paradero autosostenible', section: 'busstop' }, // Opción para volver a la página de inicio
-              { label: 'Hacer un reporte', section: 'report' },
-              { label: 'Nuestra iniactiva', section: 'values' },
-              { label: 'Factor tecnologico', section: 'tech' }
+              { label: 'Paradero autosostenible', section: '/projects/shareflow/#busstop' }, // Opción para volver a la página de inicio
+              { label: 'Hacer un reporte', section: '/projects/shareflow/#report' },
+              { label: 'Nuestra iniactiva', section: '/projects/shareflow/#values' },
+              { label: 'Factor tecnologico', section: '/projects/shareflow/#tech' }
             ]
           }
-        ];
-      default:
-        return [];
-    }
-  };
+        ]
+        
+      };
   // let currentPosition= 0
   const handleHomeMenuClick = () => {
     setIsOpen(!isOpen);
@@ -83,30 +87,68 @@ const Header = () => {
   return (
     // <div className='fixed h-24'>
     <nav className={`${isScrolled && 'bg-[#f1f1f1]  '}  fixed  w-full top-0 z-50 `}>
-      <div className="w-screen right-0 flex justify-between  py-4 px-5">
+      <div className='hidden md:flex justify-end   px-16 space-x-20 h-14 w-full  border-2 border-black'>
+      {/* <ul className={`text-center  w-screen  mx-auto items-center justify-center ${isOpen ?'flex flex-col space-y-6' :'hidden h-0'}`}> */}
+      {getMenuOptions().map((menuItem: { label: string, path: string, items: { label: string, section: string }[] }, index: number) => (
+    <div className="group cursor-pointer border-2 border-green-700 relative flex flex-col space-y-6 items-center justify-between mt-6 text-center button-hovered " key={index}>
+      <span className="text-center"  onMouseEnter={() => setIsSubMenuOpen(true)}  onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}>{menuItem.label}</span>
+      {/* Lista de submenú */}
+      {/* <div className='w-full h-64 bg-white z-40'/> */}
+      <div 
+      className={`${isSubMenuOpen? 'flex': 'hidden'} absolute justify-between  bg-[#e2e2e2] items-center h-auto z-50 flex-col border-2 mx-6 py-14 cursor-pointer`}
+      onMouseEnter={() => setIsSubMenuOpen(true)}
+      
+      >
+
+        {menuItem.items.map((subMenuItem, subIndex) => (
+          <span
+            key={subIndex}
+            className='button-hovered border-2 w-full border-yellow-700 mx-4 flex-col  flex z-50  '
+            onClick={() => {
+              setIsOpen(false)
+              setIsSubMenuOpen(false) // Close the menu
+              router.push(subMenuItem.section); // Navigate to the specified route
+            }}
+          >
+            {subMenuItem.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
+      <div className="w-screen md:hidden right-0 flex justify-between  py-4 px-5">
         <MenuIcon className ={`${isScrolled&& ''}`}onClick={()=>setIsOpen(!isOpen)}/>
         <div className=' hidden md:block px-4 space-x-4'>
           <span><PhoneIphone/> 3103452435</span>
         <span><MailOutline/> protyparkcorreo@gmail.com</span>
         </div>
         </div>
-      <div  className={`w-screen ${
+      <div  className={`w-screen  ${
           isOpen ? 'ease-in-out h-screen flex space-y-6 opacity-100' : 'h-0 top-0 -z-50 opacity-0'
         } items-center mx-auto py-4 z-50 flex-col top-10  bg-[#fafafa] transition-all duration-200  absolute left-0 right-0`}>
         <h1 className='text-xl font-bold '>Menu</h1>
-        <ul className={`text-center w-screen  mx-auto items-center justify-center ${isOpen ?'flex flex-col space-y-6' :'hidden h-0'}`}>
-        {getMenuOptions().find(option => option.path === currentPath)?.items.map((item, index) => (
-            <li key={index} onClick={() => scrollToSection(item.section)}>{item.label}</li>
-            ))}
+        <ul className={`text-center  w-screen  mx-auto items-center justify-center ${isOpen ?'flex flex-col space-y-6' :'hidden h-0'}`}>
+        {getMenuOptions().map((menuItem: { label: string, path: string, items: { label: string, section: string }[] }, index: number) => (
+          <li className="group cursor-pointer button-hovered" key={index}>
+            <span  onClick={() => scrollToSection(menuItem.path)}>{menuItem.label}</span>
+            {/* Lista de submenú */}
+            <ul className='hidden group-hover:flex flex-col cursor-pointer '>
+              {menuItem.items.map((subMenuItem, subIndex) => (
+                <li key={subIndex} className='button-hovered' onClick={() => {
+                  setIsOpen(!isOpen)
+                  router.push(`${subMenuItem.section}`)
+                  
+                }
+                }>{subMenuItem.label}</li>
+              ))}
+            </ul>
+          </li>
+        ))}
 
-            {/* <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('graphics'); setIsOpen(!isOpen)}}>Nuestros Sistemas</li>
-            <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('strains'); setIsOpen(!isOpen)}}>Nuestras Cepas</li>
-            <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('services'); setIsOpen(!isOpen)}}>Servicios</li>
-            <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('about'); setIsOpen(!isOpen)}}>Sobre Nosotros</li>
-            <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('products'); setIsOpen(!isOpen)}}>Productos</li>
-            <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('contact-form'); setIsOpen(!isOpen)}}>Contáctanos</li> */}
+           
         </ul>
-        {location.pathname!= ('/') && <button onClick={handleHomeMenuClick}className="border-4 text-xl font-semibold tracking-wide border-green-600 rounded-full px-4 py-3 hover:text-[#fafafa] border-2 hover:bg-slate-700 text-slate-700" >Volver a home</button>}
+        {typeof window !== 'undefined' && window.location.pathname!= ('/') && <button onClick={handleHomeMenuClick}className="border-4 text-xl font-semibold tracking-wide border-green-600 rounded-full px-4 py-3 hover:text-[#fafafa] border-2 hover:bg-slate-700 text-slate-700" >Volver a home</button>}
         <button onClick={()=>scrollToSection('contact-form')}className="border-4 text-xl font-semibold tracking-wide border-green-600 rounded-full px-4 py-3 hover:text-[#fafafa] border-2 hover:bg-slate-700 text-slate-700" >Necesito ayuda </button>
       </div>
     <div 
