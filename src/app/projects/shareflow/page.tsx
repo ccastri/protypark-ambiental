@@ -42,7 +42,7 @@ const Page = () => {
             </div >
             <div className='ml-32 space-y-4 flex flex-col'>
 
-        <h2 className=' text-gray-800 w-64 opacity-0 md-opacity-100 mt-56  text-xl font-bold text-center'>Sistema inteligente de purificacion de aire impulsado por microalgas e inteligencia artificial</h2>
+        <h2 className=' text-gray-800 w-64 opacity-0  mt-56 md:opacity-100 text-xl font-bold text-center'>Sistema inteligente de purificacion de aire impulsado por microalgas e inteligencia artificial</h2>
         <span className='py-4 z-20 md:px-6 opacity-0 md:opacity-100 font-bold text-center rounded-xl hover:border-none hover:bg-green-900 hover:text-[#e2e2e2] mx-12 border-2 button-hovered'>
             Conocer Más</span>
             </div>
