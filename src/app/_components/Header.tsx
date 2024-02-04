@@ -2,14 +2,48 @@
 import { useState, useEffect } from 'react'
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { Mail, MailOutline, PhoneIphone } from '@mui/icons-material';
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const router = useRouter()
+  const currentPath= usePathname()
+  const getMenuOptions = () => {
+    switch (currentPath) {
+      case '/':
+        return [
+          {
+            path: '/',
+            items: [
+              { label: 'Nuestros Sistemas', section: 'graphics' },
+              { label: 'Nuestras Cepas', section: 'strains' },
+              { label: 'Nuestros Servicios', section: 'services' },
+              { label: 'Sobre Nosotros', section: 'about' },
+              { label: 'Productos', section: 'products' },
+              { label: 'Contáctanos', section: 'contact-form' }
+            ]
+          }
+        ];
+      case '/projects/shareflow':
+        return [
+          {
+            path: '/projects/shareflow',
+            items: [
+              { label: 'Paradero autosostenible', section: 'busstop' }, // Opción para volver a la página de inicio
+              { label: 'Hacer un reporte', section: 'report' },
+              { label: 'Nuestra iniactiva', section: 'values' },
+              { label: 'Factor tecnologico', section: 'tech' }
+            ]
+          }
+        ];
+      default:
+        return [];
+    }
+  };
   // let currentPosition= 0
-  const handleMenuClick = () => {
+  const handleHomeMenuClick = () => {
     setIsOpen(!isOpen);
 
     // Verifica si el usuario está en la página principal
@@ -61,19 +95,18 @@ const Header = () => {
         } items-center mx-auto py-4 z-50 flex-col top-10  bg-[#fafafa] transition-all duration-200  absolute left-0 right-0`}>
         <h1 className='text-xl font-bold '>Menu</h1>
         <ul className={`text-center w-screen  mx-auto items-center justify-center ${isOpen ?'flex flex-col space-y-6' :'hidden h-0'}`}>
-            {/* <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={handleMenuClick}>Inicio</li> */}
-            <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('graphics'); setIsOpen(!isOpen)}}>Nuestros Sistemas</li>
+        {getMenuOptions().find(option => option.path === currentPath)?.items.map((item, index) => (
+            <li key={index} onClick={() => scrollToSection(item.section)}>{item.label}</li>
+            ))}
+
+            {/* <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('graphics'); setIsOpen(!isOpen)}}>Nuestros Sistemas</li>
             <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('strains'); setIsOpen(!isOpen)}}>Nuestras Cepas</li>
-            {/* <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {router.push('/renombrar-planillas'); setIsOpen(!isOpen)}}>Cargar y Renombrar Archivos</li> */}
             <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('services'); setIsOpen(!isOpen)}}>Servicios</li>
             <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('about'); setIsOpen(!isOpen)}}>Sobre Nosotros</li>
             <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('products'); setIsOpen(!isOpen)}}>Productos</li>
-            <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('contact-form'); setIsOpen(!isOpen)}}>Contáctanos</li>
-            {/* <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {router.push('/products'); setIsOpen(!isOpen)}}>Productos</li>
-            <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('otherSkills'); setIsOpen(!isOpen)}}>Otras habilidades</li>
-            <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('footer'); setIsOpen(!isOpen)}}>Contacto</li> */}
-
+            <li className={`text-center text-lg font-semibold tracking-wide flex items-center justify-center mx-auto ${isOpen ?'flex cursor-pointer hover:text-slate-400 hover:ease-in-out transition-all transform duration-200 w-screen text-center hover:scale-105' :'hidden h-0'}`} onClick={() => {scrollToSection('contact-form'); setIsOpen(!isOpen)}}>Contáctanos</li> */}
         </ul>
+        {location.pathname!= ('/') && <button onClick={handleHomeMenuClick}className="border-4 text-xl font-semibold tracking-wide border-green-600 rounded-full px-4 py-3 hover:text-[#fafafa] border-2 hover:bg-slate-700 text-slate-700" >Volver a home</button>}
         <button onClick={()=>scrollToSection('contact-form')}className="border-4 text-xl font-semibold tracking-wide border-green-600 rounded-full px-4 py-3 hover:text-[#fafafa] border-2 hover:bg-slate-700 text-slate-700" >Necesito ayuda </button>
       </div>
     <div 

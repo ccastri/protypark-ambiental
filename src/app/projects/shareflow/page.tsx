@@ -6,7 +6,9 @@ import React from 'react';
 const Page = () => {
   return (
     <div className='flex flex-col w-full overflow-x-hidden h-full'>
-      <div className='  
+      <div 
+      id='busstop'
+      className='  
       relative flex flex-col w-screen items-center  h-screen bg-[#E2E2E2] mx-auto  pl-8'>
         {/* <div className='w-9/12 flex flex-col space-y-8 mx-auto'>
           <h1 className='tracking-wide text-2xl text-gray-900 text-center px-6 font-semibold'>
@@ -19,7 +21,9 @@ const Page = () => {
           </div>
         </div> */}
        {/* <div> */}
-       <span className='pt-20 z-10'>Paraderos Autosostenibles</span>
+       
+       <div className='h-8 absolute w-8/12 flex  bg-green-300 mt-28 border-4 z-10'/>
+       <span className='pt-20 text-6xl z-10 text-gray-900'>Paraderos Autosostenibles</span>
         <Hero/>
       {/* </div> */}
       </div>
@@ -27,7 +31,9 @@ const Page = () => {
         <> 
         
         {/* SECOND COMPONENT */}
-        <div className='h-screen w-screen relative overflow-hidden bg-green-200 flex '>
+        <div 
+        id='report'
+        className='h-screen w-screen relative overflow-hidden bg-green-200 flex '>
         <Image className='rounded-r-md opacity-50 ' src={"/busstop.png"} alt='' width={1400} height={1200} />
         <div className=' grid grid-cols-3 absolute h-screen my-auto px-16 w-full mx-auto '>
             
@@ -72,7 +78,9 @@ const Page = () => {
       </div></>
 
       {/*  WHITE BG COMPONENT*/}
-        <div className=' h-auto gap-4 bg-[#fafafa] py-12 px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 '>
+        <div 
+        id="values"
+        className=' h-auto gap-4 bg-[#fafafa] py-12 px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 '>
             <div className='flex flex-col space-y-6  '>
             <h2 className='text-3xl font-bold'>Ciudades y Comunidades Sostenibles</h2>
         <p>Nuestro sistema monitorea las condiciones ambientales, es capaz de adaptarse y garantizar condiciones de optimas de cultivo mientras convierte el CO2 del ambiente en aire limpio</p>
@@ -92,7 +100,9 @@ const Page = () => {
      
       {/* THIRD COMPONENT */}
 <>
-<div className='h-full py-8 w-screen relative overflow-hidden bg-gray-800 md:flex flex-col grid grid-cols-1  '>
+<div 
+id='tech'
+className='h-full py-8 w-screen relative overflow-hidden bg-gray-800 md:flex flex-col grid grid-cols-1  '>
 <Image className='rounded-r-md opacity-40 bg-gray-800 absolute' src={"/busstopnight.png"} alt='' width={1400} height={1200} />
 
 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-8 md:px-16 md:justify-center h-full md:h-1/2 z-30 text-white items-center font-bold'>
