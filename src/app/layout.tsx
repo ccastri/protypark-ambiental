@@ -23,9 +23,9 @@ export default function RootLayout({
       <Header/>
         
         {children}
-      </body>
            <ChatBubble />
         <Footer/>
+      </body>
     </html>
   )
 }
