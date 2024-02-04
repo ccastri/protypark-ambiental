@@ -70,7 +70,7 @@ const Slider = () => {
                   exit={{ opacity: 0 }}
                 >
                   <Image
-                    className="border-2 opacity-60 object-cover cursor-pointer"
+                    className="border-2  h-screen  w-full opacity-60 object-cover cursor-pointer"
                     src={`/${slide.imgBg}`}
                     alt={`Image ${index}`}
                     width={500}

@@ -84,7 +84,7 @@ const router = useRouter()
     <div className="group h-auto z-30 flex items-center my-auto justify-center button-hovered shadow-lg border-2 text-center rounded-lg   mx-auto ">
       
         <div className='max-w-1/4 max-h-1/2 p-6  px-12 relative   group-hover:bg-[#E2E2E2] h-auto border-2'>
-      <Image className="absolute -z-10 opacity-40  rounded-lg " src={`/${bgImage}`} fill={true} alt=""/>
+      <Image className="absolute -z-10 opacity-40  bg-[#a1a1a1] rounded-lg " src={`/${bgImage}`} fill={true} alt=""/>
     <h3 className="text-xl text-[#E2E2E2] group-hover:text-gray-900   font-semibold   mb-4">{title}</h3>
     <div className="flex flex-col opacity-100 items-center z-30 mb-4">
       <span className="mr-2 text-gray-900">Valor Primer Mes:</span>
