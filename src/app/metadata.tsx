@@ -3,6 +3,6 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'C&C Accion Legal',
+  title: 'Protipark Env',
   description: 'Hecho con <3 por ccastri',
 };
