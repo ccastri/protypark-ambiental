@@ -8,6 +8,9 @@ import { FileUploader } from './DragAndDrop';
 import axios from'axios'
 import GraficaAfiliados from './GraficasAfiliados';
 import UserDataDisplay from './Profile';
+import OverlappedBarChart from './OverlappedBarChart';
+import { ArrowDownwardOutlined, ArrowDropDown, ArrowDropUp, ReportOffOutlined } from '@mui/icons-material';
+import CircularProgressBar from './ProgressBar';
 // import { selectAuthUser } from '../../../redux/authSlice';
 
 // Definición de la interfaz para representar un afiliado
@@ -30,23 +33,6 @@ export interface DocumentoAfiliado {
   identificacion: number;
   afp: string
 }
-// Función que devuelve la lista de afiliados según el tipo de planilla
-// const ListaPorTipoPlanilla = ({ afiliados, handleAfiliadoSeleccionado }: any) => {
-//   return (
-//     <ul className='space-y-2 '>
-//       {afiliados.map((afiliado: Afiliado, index: number) => (
-//         <li key={index}>
-//           <div className=>
-//             <>{afiliado.id}. {afiliado.primer_nombre} {afiliado.primer_apellido} {afiliado.tipo_identificacion}  {afiliado.identificacion}{afiliado.afp} </>
-//             <span className="items-center flex justify-center w-full">{afiliado.afp !== null ? 'E' : 'N'}</span>
-//           </div>
-//         </li>
-//       ))}
-//     </ul>
-//   );
-// };
-
-
 
 const ListaAfiliados = ({ handleAfiliadoSeleccionado }: { handleAfiliadoSeleccionado: (id: number, tipoIdentificacion: string, identificacion:number, afp: string) => void }) => {
   const [afiliados, setAfiliados] = useState<Afiliado[]>([]);
@@ -124,13 +110,13 @@ const handleFilterChange = (filterName: string, value: string) => {
     <div 
     id="lista-afiliados"
     className='border-2 text-gray-900 flex flex-col w-full items-center justify-center h-auto py-8 space-y-2 bg-[#E2E2E2]'>
-      <h1 className='text-gray-900 text-left w-full  font-bold text-3xl text-center pt-6 px-20 mb-4'>Lista de Afiliados</h1>
+      <h1 className='text-gray-900 text-left w-full  font-bold text-3xl text-center pt-6 px-20 mb-4'>Lista de Estaciones</h1>
       <div className="flex flex-col w-full ">
-      <h2 className="w-auto text-gray-900 text-xl  font-semibold px-6 text-center pb-12">1. Selecciona los afiliados de tu listado para consultar la planilla en simple</h2>
+      <h2 className="w-auto text-gray-900 text-xl  font-semibold px-6 text-center pb-12">1. Selecciona una estación para ver el detalle</h2>
       <div className='p-2 space-y-4 border-2 flex flex-col w-12/12 bg-white rounded-md shadow-md'>
         <div className='p-2 space-y-4 border-2 flex  flex-col w-12/12'>
-          <h2 className='text-center text-gray-900 font-semibold text-xl'>Informacion Afiliados</h2>
-          <p>Para buscar más rápido puedes usar los siguientes filtros de busqueda:</p>
+          <h2 className='text-center text-gray-900 font-semibold text-xl'>Informacion Estaciones</h2>
+          <p>Filtrar busqueda:</p>
 <div className="flex flex-col space-y-2 md:flex-row justify-evenly space-x-8">  
    <label className="px-2 items-center flex justify-between"> Orden alfabético <span className="px-2 relative">
     <select 
@@ -143,41 +129,37 @@ className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
 </span>
     
 </label>
-  <label className="px-2 items-center flex justify-between"> EPS <span className="px-2"><select 
+  <label className="px-2 items-center flex justify-between"> Zona <span className="px-2"><select 
 className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
  onChange={(e) => handleFilterChange('eps', e.target.value)}
 >
   <option value="">SELECCIONAR</option>
-  <option value="SOS EPS">SOS EPS</option>
-  <option value="SALUD TOTAL EPS">SALUD TOTAL EPS</option>
-  <option value="EPS SANITAS">EPS SANITAS</option>
-  <option value="EPS SURA">EPS SURA</option>
-  <option value="NUEVA EPS">NUEVA EPS</option>
-  <option value="EMSSANAR EPS">EMSSANAR EPS</option>
-  <option value="COMFENALCO VALLE EPS">COMFENALCO VALLE EPS</option>
-  <option value="EPS-S COOSALUD">EPS-S COOSALUD</option>
+  <option value="SOS EPS">Norte</option>
+  <option value="SALUD TOTAL EPS">ORIENTE</option>
+  <option value="EPS SANITAS">OCCIDENTE</option>
+  <option value="EPS SURA">SUR</option>
+
   {/* Add more options as needed */}
 </select></span></label>
-  <label className="px-2 items-center flex justify-between"> AFP <span className="px-2"><select 
+  <label className="px-2 items-center flex justify-between"> Tipo de Estación <span className="px-2"><select 
 className="p-2 border-2 cursor-pointer rounded-full border-[#000f] bg-[#fafafa]"
  onChange={(e) => handleFilterChange('afp', e.target.value)}
  >
   <option value="">SELECCIONAR</option>
-  <option value="null">SIN PENSION</option>
-  <option value="COLPENSIONES">COLPENSIONES</option>
-  <option value="PROTECCION">PROTECCION</option>
-  <option value="PORVENIR">PORVENIR</option>
-  <option value="COLFONDOS">COLFONDOS</option>
+  <option value="null">Tipo I</option>
+  <option value="COLPENSIONES">Tipo II</option>
+  <option value="PROTECCION">Tipo III</option>
+
 </select></span></label>
   {/* <label className="px-2 flex"> <input className="pl-2" type="checkbox" id="riesgo"/> <span className="px-2">RIESGO</span></label> */}
   </div>
   <div className=" justify-between  flex flex-col space-y-4 md:space-y-0 md:flex-row p-4">
 
   <label className="px-2 flex items-center space-x-6"><span className="bg-blue-200  text-gray-700  px-2 space-x-4 shadow-md rounded-lg"
->Número de Cédula</span> <input 
+>Direccion</span> <input 
  onChange={(e) => handleFilterChange('identificacion', e.target.value)}
 className="w-44 border-2 rounded-full" type="text" id="numeroCedula"/> </label>
-  <label><span className="px-2">RIESGO</span>
+  {/* <label><span className="px-2">RIESGO</span>
 
   <select 
   onChange={(e) => handleFilterChange('riesgo', e.target.value)}
@@ -188,19 +170,19 @@ className=" border-2 rounded-full space-x-2 p-2 bg-[#fafafa]">
   <option value="3">3</option>
   <option value="4">4</option>
   <option value="5">5</option>
-  {/* Add more options as needed */}
+
 </select>
-  </label>
+  </label> */}
   </div>
           <table className="w-full">
             <thead className=''>
               <tr className=" w-full ">
                 <th className="border-2 border-gray-700 px-4">Nombre</th>
-                <th className="border-2 border-gray-700 px-4">Tipo <br/> Documento</th>
-                <th className="border-2 border-gray-700 px-4">Identificación</th>
-                <th className="border-2 border-gray-700 px-4">AFP</th>
+                <th className="border-2 border-gray-700 px-4">Direccion</th>
+                <th className="border-2 border-gray-700 px-4">Zona</th>
+                <th className="border-2 border-gray-700 px-4">Tipo</th>
+                <th className="border-2 hidden md:table-cell border-gray-700 px-4"># Bioreactores</th>
                 <th className="border-2 hidden md:table-cell border-gray-700 px-4">Estado</th>
-                <th className="border-2 hidden md:table-cell border-gray-700 px-4">Acciones</th>
                 
               </tr>
             </thead>
@@ -248,7 +230,7 @@ onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) 
         </span>
       </div>
     </div>
-    <div className="flex  items-center h-full flex-col">
+    {/* <div className="flex  items-center h-full flex-col">
 <h2 className="font-bold text-3xl py-8 ">Estadísticas de mis afiliados</h2>
 <>Estas graficas amplian la informacion mostrada en la tabla de afiliados</>
     <div className="grid  grid-cols-1 md:grid-cols-2 max-w-4xl space-x-6 h-full pt-4 bg-[#fafafa] ">
@@ -259,7 +241,7 @@ onChange={(e) => setPagination({ ...pagination, limit: parseInt(e.target.value) 
     <GraficaAfiliados datosAfiliados={afiliados}/>
     <GraficaAfiliados datosAfiliados={afiliados}/>
     </div>
-    </div>
+    </div> */}
   </>
   
   );
@@ -483,12 +465,102 @@ const handleAfiliadoSeleccionado = async (id: number, tipoIdentificacion: string
     // Manejo de errores
   }
 };
+const moneySpentData = [1000, 500, 300]; // Example data for money spent
 
 
   return (
-    <div className="space-y-4 h-full ">
+    <div className="space-y-4 h-full px-8">
       <ListaAfiliados handleAfiliadoSeleccionado={handleAfiliadoSeleccionado} />
-      <DocumentosAfiliados documentosAfiliados={documentosAfiliados} />
+      {/* <DocumentosAfiliados documentosAfiliados={documentosAfiliados} /> */}
+      <div className='grid grid-cols-4'>
+
+        <div className='grid grid-cols-2 gap-4 mx-auto'>
+          <h2 className='text-xl font-bold'>Captacion de Carbono</h2> <span className='text-green-800 underline cursor-pointer'>ver todo</span>
+          <span className='px-6 py-4 border-2 border-green-700 rounded-lg text-center'>Por zona</span> <span className='px-6 py-4 border-2  rounded-lg text-center'>Por estación</span>
+          <p>Norte</p> <span className=''>101136 kg <ArrowDropDown className='text-red-500'/></span>
+          <div className="col-span-2 border-b-2 border-gray-200 mr-12 flex h-2"/>
+          <p>Sur</p>  <span className=''>43136 kg <ArrowDropUp className='text-green-500'/></span>
+          <div className="col-span-2 border-b-2 border-gray-200 mr-12 flex h-2"/>
+          <p>Oriente</p> <span className=''>243136 kg <ArrowDropUp className='text-green-500'/></span>
+          <div className="col-span-2 border-b-2 border-gray-200 mr-12 flex h-2"/>
+          <p>Occidente</p> <span className=''>3136 kg <ArrowDropUp className='text-green-500'/></span>
+          <div className="col-span-2 border-b-2 border-gray-200 mr-12 flex h-2"/>
+        </div>
+
+        <div className='col-span-2'>
+          <div className='flex justify-between'>
+          <h1 className='col-span-1'>Balance financiero del proyecto</h1> <span className='col-span-1'> 3,227,222 CO2e</span>
+          </div>
+          <OverlappedBarChart data={moneySpentData} />
+        </div>
+
+        <div>
+        <CircularProgressBar
+          title='Actores Viales Contaminantes'
+          data={{
+            labels: ["Vehiculos particulares", "Transporte publico", "Taxis"],
+            values: [20, 30, 50],
+            bgColors: ["#75c0c0", "#ff6384", "#ffcd56"],
+          }}
+        circleWidth={30}
+        />
+        </div>
+      </div>
+
+
+      <div className='grid grid-cols-6 mx-auto max-w-6xl '>
+      <div className='px-4'>
+        <CircularProgressBar
+          title='Total Emisiones CO2 / Captacion de carbono'
+          data={{
+            labels: ["Emisiones de CO2", "Captacion de Carbono"],
+            values: [70, 30],
+            bgColors: [ "#ff6384", "#ffcd56"],
+          }}
+        circleWidth={70}
+        />
+        </div>
+
+
+        <div className=' gap-4 grid grid-cols-2 col-span-3 mx-auto  '>
+        <h2 className='text-xl font-bold'>Top Captacion de Carbono</h2> <span className='text-green-800 underline cursor-pointer'>ver todo</span>
+          <div><p>Estacion A</p> <span>Norte</span></div> <span className=''>101136 kg <ArrowDropDown className='text-red-500'/></span>
+          <div className="col-span-2 border-b-2 border-gray-200 mr-12 flex h-2"/>
+          <div><p>Estacion B </p><span>Oriente</span></div>  <span className=''>43136 kg <ArrowDropUp className='text-green-500'/></span>
+          <div className="col-span-2 border-b-2 border-gray-200 mr-12 flex h-2"/>
+          <div><p>Estacion C </p><span>Oriente</span></div> <span className=''>243136 kg <ArrowDropUp className='text-green-500'/></span>
+          <div className="col-span-2 border-b-2 border-gray-200 mr-12 flex h-2"/>
+          <div><p>Estacion D</p> <span>Oriente</span></div> <span className=''>3136 kg <ArrowDropUp className='text-green-500'/></span>
+          <div className="col-span-2 border-b-2 border-gray-200 mr-12 flex h-2"/>
+        </div>
+
+
+        <div className='col-span-2'>
+          <h2>Notificaciones</h2>
+          <div className='grid grid-cols-6 border-2 py-4 px-8 rounded-xl '>
+         <ReportOffOutlined/><div className='col-span-4'><h2 className='text-sm'>Reporte de Mantenimiento</h2></div>
+          <>x</>
+          <div></div>
+          <p className='text-sm col-span-4 pl-2 pb-2'>Crea un reporte mensual</p>
+          <div></div>
+          <div></div>
+          <span className='col-span-3 px-6 py-2 border-2 bg-green-600 w-40 rounded-xl text-center text-[#e2e2e2] flex'>Añadir reporte</span>
+          </div>
+
+
+          <div className='grid grid-cols-6 border-2 py-4 px-8 rounded-xl '>
+         <ReportOffOutlined/><div className='col-span-4'><h2 className='text-sm'>Reportes de la comunidad</h2></div>
+          <>x</>
+          <div></div>
+          <p className='text-sm col-span-4 pl-2 pb-2'>Ver zonas con mayor cantidad reportes comunitarios</p>
+          <div></div>
+          <div></div>
+          <span className='col-span-3 px-6 py-2 border-2 bg-green-600 w-40 rounded-xl text-center text-[#e2e2e2] flex'>Ver reportes</span>
+          </div>
+
+         
+        </div>
+      </div>
     </div>
   );
 };

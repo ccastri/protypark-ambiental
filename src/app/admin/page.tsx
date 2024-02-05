@@ -11,7 +11,6 @@ const Page = () => {
 
 
 
-
   return (
     <main>
       {/* <Home /> */}

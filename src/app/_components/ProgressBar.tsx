@@ -9,9 +9,10 @@ interface ICircularProgressBarProps {
     values: number[];
     bgColors: string[];
   };
+  circleWidth: number;
 }
 
-const CircularProgressBar: React.FC<ICircularProgressBarProps> = ({ title, data }) => {
+const CircularProgressBar: React.FC<ICircularProgressBarProps> = ({ title, data, circleWidth }) => {
   const { labels, values, bgColors } = data;
   const chartRef = useRef<Chart<"doughnut", number[], string> | null>(null);
   const [isAnimated, setIsAnimated] = useState(false);
@@ -44,13 +45,23 @@ const CircularProgressBar: React.FC<ICircularProgressBarProps> = ({ title, data 
               options: {
                 plugins: {
                   legend: {
-                    display: true,
+                    display: false,
                   },
+                  // tooltip: {
+                  //   callbacks: {
+                  //     label: function(context) {
+                  //       return `${labels[context.dataIndex]}: ${values[context.dataIndex]}`;
+                  //     }
+                  //   }
+                  // }
                 },
+
+                  
                 animation: {
                   animateRotate: true,
                   animateScale: true,
                 },
+                cutout: `${100 - circleWidth}%`
               },
             });
           }
@@ -59,13 +70,24 @@ const CircularProgressBar: React.FC<ICircularProgressBarProps> = ({ title, data 
     } else {
       setIsAnimated(false);
     }
-  }, [values, labels, bgColors, title, inView, isAnimated, entry]);
+  }, [values, labels, bgColors, title, inView, isAnimated, entry, circleWidth]);
 
   return (
-    <div className='h-full max-w-4xl items-center justify-center mx-auto flex flex-col' ref={ref}>
-      <h2 className="text-center mx-auto">{title}</h2>
-      <canvas id={`chart-canvas-${title.replace(/\s/g, '')}`}></canvas>
+  <div className='h-full max-w-4xl space-y-4 justify-center mx-auto flex flex-col' ref={ref}>
+    <h2 className="text-center mx-auto">{title}</h2>
+    <div className="legend-container">
     </div>
+    <canvas id={`chart-canvas-${title.replace(/\s/g, '')}`}></canvas>
+      {labels.map((label, index) => (
+        <div key={label} className="flex space-x-4 text-left items-center  legend-item">
+          <div className={`border-2 items-center flex justify-center h-3 w-3 rounded-full  mr-2`} style={{ backgroundColor: bgColors[index] }}> 
+          </div>
+          
+          <div className="legend-label">{label} {values[index]}</div>
+        </div>
+      ))}
+  </div>
+
   );
 };
 
