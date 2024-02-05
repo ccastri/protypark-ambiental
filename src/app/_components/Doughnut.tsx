@@ -32,6 +32,7 @@ const OtherSkills = () => {
             values: [20, 30, 50],
             bgColors: ["#75c0c0", "#ff6384", "#ffcd56"],
           }}
+          circleWidth={30}
         />
         <CircularProgressBar
           title='Variables de control'
@@ -40,6 +41,7 @@ const OtherSkills = () => {
             values: [5, 27, 29, 16, 10, 18, 20],
             bgColors: ["#0602ff", "#02c4ff", "#f0850a", "#ffcd56", "#bbbbbb", "#eeeeee", "#ee0909"],
           }}
+          circleWidth={80}
         />
         <CircularProgressBar
           title='Intercambio de gases'
@@ -48,6 +50,7 @@ const OtherSkills = () => {
             values: [5, 15, 25, 30],
             bgColors: ["#8BC34A", "#4CAF50", "#388E3C", "#02c4ff"],
           }}
+          circleWidth={50}
         />
       </div>
     </div>
