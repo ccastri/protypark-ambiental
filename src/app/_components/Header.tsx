@@ -42,6 +42,16 @@ const Header = () => {
               { label: 'Nuestra iniactiva', section: '/projects/shareflow/#values' },
               { label: 'Factor tecnologico', section: '/projects/shareflow/#tech' }
             ]
+          },
+          {
+            label:'Productos', 
+            path: '/projects/shareflow',
+            items: [
+              { label: 'Cultivo de Cepas', section: '/projects/shareflow/#busstop' }, // Opción para volver a la página de inicio
+              { label: 'Fotobioreactores', section: '/projects/shareflow/#report' },
+              { label: 'Lamparas reductoras de CO2', section: '/projects/shareflow/#values' },
+              { label: 'Comprimidos y derivados', section: '/projects/shareflow/#tech' }
+            ]
           }
         ]
         
@@ -87,15 +97,17 @@ const Header = () => {
   return (
     // <div className='fixed h-24'>
     <nav className={`${isScrolled && 'bg-[#f1f1f1]  '}  fixed  w-full top-0 z-50 `}>
-      <div className='hidden md:flex justify-end   px-16 space-x-20 h-14 w-full  border-2 border-black'>
+      <div className={`${isSubMenuOpen? 'md:flex': 'hidden'} opacity-0 md:opacity-100 bg-white h-[500px] w-screen absolute -z-30 `}/>
+      <div className='hidden md:flex justify-end   px-16 space-x-20 h-14 w-full  '>
       {/* <ul className={`text-center  w-screen  mx-auto items-center justify-center ${isOpen ?'flex flex-col space-y-6' :'hidden h-0'}`}> */}
       {getMenuOptions().map((menuItem: { label: string, path: string, items: { label: string, section: string }[] }, index: number) => (
-    <div className="group cursor-pointer border-2 border-green-700 relative flex flex-col space-y-6 items-center justify-between mt-6 text-center button-hovered " key={index}>
-      <span className="text-center"  onMouseEnter={() => setIsSubMenuOpen(true)}  onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}>{menuItem.label}</span>
+    
+    <div className="group   z-20 cursor-pointer py-4 relative flex flex-col space-y-8 items-center justify-between  text-center button-hovered " key={index}>
+    
+      <span className="text-center px-4 z-20  h-auto"  onMouseEnter={() => setIsSubMenuOpen(true)}  onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}>{menuItem.label}</span>
       {/* Lista de submenú */}
-      {/* <div className='w-full h-64 bg-white z-40'/> */}
       <div 
-      className={`${isSubMenuOpen? 'flex': 'hidden'} absolute justify-between  bg-[#e2e2e2] items-center h-auto z-50 flex-col border-2 mx-6 py-14 cursor-pointer`}
+      className={`${isSubMenuOpen? 'flex': 'hidden'} -z-30 absolute justify-between   items-center h-96   flex-col  mx-6 py-12 cursor-pointer`}
       onMouseEnter={() => setIsSubMenuOpen(true)}
       
       >
@@ -103,7 +115,7 @@ const Header = () => {
         {menuItem.items.map((subMenuItem, subIndex) => (
           <span
             key={subIndex}
-            className='button-hovered border-2 w-full border-yellow-700 mx-4 flex-col  flex z-50  '
+            className='button-hovered w-full mx-4 py-2 flex-col  flex z-50  '
             onClick={() => {
               setIsOpen(false)
               setIsSubMenuOpen(false) // Close the menu
@@ -148,8 +160,8 @@ const Header = () => {
 
            
         </ul>
-        {typeof window !== 'undefined' && window.location.pathname!= ('/') && <button onClick={handleHomeMenuClick}className="border-4 text-xl font-semibold tracking-wide border-green-600 rounded-full px-4 py-3 hover:text-[#fafafa] border-2 hover:bg-slate-700 text-slate-700" >Volver a home</button>}
-        <button onClick={()=>scrollToSection('contact-form')}className="border-4 text-xl font-semibold tracking-wide border-green-600 rounded-full px-4 py-3 hover:text-[#fafafa] border-2 hover:bg-slate-700 text-slate-700" >Necesito ayuda </button>
+        {typeof window !== 'undefined' && window.location.pathname!= ('/') && <span onClick={handleHomeMenuClick}className="border-4 text-xl font-semibold md:hidden tracking-wide border-green-600 rounded-full px-4 py-3 hover:text-[#fafafa] border-2 hover:bg-slate-700 text-slate-700" >Volver a home</span>}
+        <span onClick={()=>scrollToSection('contact-form')}className="border-4 text-xl font-semibold tracking-wide border-green-600 rounded-full px-4 py-3md:hidden  hover:text-[#fafafa] border-2 hover:bg-slate-700 text-slate-700" >Necesito ayuda </span>
       </div>
     <div 
      style={{ width: `${scrollPosition}%` }}

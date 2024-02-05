@@ -7,7 +7,7 @@ const About = () => {
   return (
     <div 
     id="about"
-    className="bg-[rgb(226,226,226)] text-gray-900 flex flex-col group justify-center h-screen px-6">
+    className="bg-[rgb(226,226,226)] text-gray-900 flex flex-col group justify-center h-full py-8 px-12">
     <div className="max-w-4xl flex flex-col mx-auto">
       <h2 className="text-3xl font-bold mb-4">¡Bienvenido a Protypark Ambiental: Innovación Sostenible en Acción!</h2>
       <p className="text-lg leading-relaxed">
@@ -26,7 +26,7 @@ const About = () => {
       <br/>
       <span 
       onClick={()=>router.push('/projects/shareflow')}
-      className='border-2 border-gray-900 text-gray-900 px-6 rounded-full hover:border-none hover:bg-amber-900 flex items-end w-1/32 ml-[70%] right-0 hover:text-[#fafafa] py-4 button-hovered '>¡Conoce nuestro proyecto!</span>
+      className='border-2 border-gray-900 text-gray-900 px-6 rounded-full hover:border-none hover:bg-amber-900 flex items-start w-3/4 md:w-4/12 md: right-0 hover:text-[#fafafa] py-4 button-hovered '>¡Conoce nuestro proyecto!</span>
     {/* <div className='flex flex-col space-y-3 pt-4'>
 
     <div className='flex'><PolicyOutlined className='mr-2' sx={{ width: 30, height:30}}/><span> Procesos legalmente certificados por nuestro departamento juridico</span></div>

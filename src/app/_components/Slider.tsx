@@ -23,12 +23,6 @@ export const sliderItems = [
   {'id':5, 
   'title':'Chlorella Vulgaris', 'imgBg':"Chlorella1-2.webp", 'adds':'Chlorella in 200x microscope 20um' , 'website':' https://r3js-vite.vercel.app/'},
 
-  // {'imgBg':"aesthetic_col_3.png", "img":'PhotoRoom_20230811_172032.png_big_no_bg.png'},
-  // {'imgBg':"aesthetic_col_3.png", "img":'PhotoRoom_20230811_172055.png_big_no_bg.png'},
-  // {'imgBg':"aesthetic_col_3.png", "img":'PhotoRoom_20230811_172118_big_no_bg.png'},
-  // {'imgBg':"aesthetic_col_4.png", "img":'PhotoRoom_20230811_172423_big_no_bg.png'},
-  // {'imgBg':"", "img":'PhotoRoom_20230811_171700.png'},
-  // {'imgBg':"", "img":'PhotoRoom_20230811_172447.png'}
 ];
 
 const Slider = () => {
@@ -52,13 +46,13 @@ const Slider = () => {
 
 
   return (
-    <div className="w-screen relative border-y-2 h-screen md:h-full flex flex-col">
-      <div className="flex h-screen">
+    <div className="w-screen relative border-y-2 h-full mx-auto md:px-16 items-center justify-center flex flex-col">
+      <div className="flex flex-col justify-center md:flex-row h-full">
         {/* Carrusel en la mitad izquierda */}
-        <div className="w-1/2">
+        <div className="w-screen md:w-1/2">
           <div
             ref={sliderRef}
-            className="h-screen  justify-center  flex rounded-md"
+            className="h-screen  items-center  flex  rounded-md"
           >
             <AnimatePresence>
               {sliderItems.map((slide, index) => (
@@ -70,13 +64,13 @@ const Slider = () => {
                   exit={{ opacity: 0 }}
                 >
                   <Image
-                    className="border-2  h-screen  w-full opacity-60 object-cover cursor-pointer"
+                    className="border-2  h-screen mx-auto w-full opacity-60 object-cover cursor-pointer"
                     src={`/${slide.imgBg}`}
                     alt={`Image ${index}`}
                     width={500}
                     height={500}
                     style={{
-                      display: index === currentImageIndex ? 'block' : 'none',
+                      display: index === currentImageIndex ? 'flex' : 'none',
                     }}
                   />
                 </motion.div>
@@ -98,7 +92,7 @@ const Slider = () => {
         </div>
 
         {/* Título y adiciones en la mitad derecha */}
-        <div className="w-1/2 flex flex-col justify-center items-center p-8">
+        <div className=" w-screen mb-12 md:mb-0 md:w-1/2 flex flex-col justify-center items-center p-8">
           <h2 className="text-2xl font-bold mb-4">{sliderItems[currentImageIndex].title}</h2>
           <p>{sliderItems[currentImageIndex].adds}</p>
         </div>

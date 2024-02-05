@@ -16,7 +16,7 @@ const Page = () => {
   // const newClientPlans = plans.filter(plan => plan.isNewClient)[0];
   // console.log(newClientPlans)
   return (
-    <div id='landing' className=' -z-10 max-w-screen text-[#e2e2e2] bg-green-700  '>
+    <div id='landing' className=' -z-10 max-w-screen overflow-x-hidden   text-[#e2e2e2] bg-green-700  '>
       <HeroLanding/>
       <Doughnut/>
       {/* <ProductPage/> */}

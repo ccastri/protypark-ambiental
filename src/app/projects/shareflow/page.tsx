@@ -34,7 +34,7 @@ const Page = () => {
         <div 
         id='report'
         className='h-screen w-screen relative overflow-hidden bg-green-200 flex '>
-        <Image className='rounded-r-md opacity-50 ' src={"/busstop.png"} alt='' width={1400} height={1200} />
+        <Image className='rounded-r-md h-screen opacity-50 ' src={"/busstop.png"} alt='' width={1400} height={1200} />
         <div className=' grid grid-cols-3 absolute h-screen my-auto px-16 w-full mx-auto '>
             
         <div className='button-hovered flex flex-col items-center text-lg  font-bold text-gray-800 justify-center'>
