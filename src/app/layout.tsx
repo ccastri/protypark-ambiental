@@ -8,7 +8,7 @@ import Footer from './_components/Footer'
 const raleway = Raleway({ subsets: ['latin'] })
 // Raleway
 export const metadata: Metadata = {
-  title: 'C&C Accion Legal SAS',
+  title: 'Protipark Env',
   description: 'Made with <3 by ccastri',
 }
 
