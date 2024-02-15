@@ -19,7 +19,6 @@ const Page = () => {
     <div id='landing' className=' -z-10 max-w-screen overflow-x-hidden   text-[#e2e2e2] bg-green-700  '>
       <HeroLanding/>
       <Doughnut/>
-      {/* <ProductPage/> */}
       <HostNewClients/>
       <Slider/>
       <Tutorial/>
