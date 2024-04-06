@@ -313,13 +313,13 @@ export default function NewClientForm() {
 
       // #747a80, #00619E,  #C29A95, #E0C4A0, #3B2F3C  #0D202F
       <div id="new-client-form" className='h-full '>
-<div className="relative mt-16 w-100  h-screen bg-[#fafafa]   xl:flex-col transition-all duration-200 scrollbar-track-transparent overflow-y-scroll scrollbar-thin scrollbar-thumb-[#747a80] scrollbar-thumb-rounded-md">
+<div className="relative mt-16 w-100  h-screen bg-[#fafafa]   xl:flex-col transition-all duration-200 ">
 
   <div className=" w-full absolute h-screen  bg-[#fafafa] opacity- flex items-center transition-all duration-200 transform -skew-y-12 mb-32 z-40 overflow-y-hidden "  >
-    <div className= ' bg-gradient-to-b rounded-t-md from-[#6A6257] to-[#E0C4A0] ml-6 w-[30%] h-full'>
-    <h1 className= '  px-4 bg-[#E0C4A0] p-6 mt-20  my-auto text-xl text-center font-bold text-slate-100 '>¡Bienvenido abordo!</h1>
+    <div className= ' bg-gradient-to-b rounded-t-md from-[#0b0a4e] to-[#837e7e]    w-full  flex  flex-col md:w-[60%] mx-auto h-full'>
+    <h1 className= '  px-4 bg-[#837e7e] p-6 mt-20  my-auto text-xl text-center font-bold  '>¡Bienvenido abordo!</h1>
     </div>
-    <div className= "grid grid-cols-4 my-0 text-[#fafafa]  py-16  items-center ml-6 border rounded  w-[70%] h-full bg-gradient-to-b from-[#123CD0] to-[#E0C4A0]">
+    {/* <div className= "grid grid-cols-4 my-0 text-[#fafafa]  py-16  items-center ml-6 border rounded  w-[70%] h-full bg-gradient-to-b from-[#123CD0] to-[#E0C4A0]">
       {iconList.map((item, index) => (
         <div key={index} className="flex justify-center items-center">
           < item.icon  sx={item.sx}/>
@@ -327,13 +327,13 @@ export default function NewClientForm() {
       ))}
 
 
-</div>
+</div> */}
 
-    <div className=' absolute flex z-10 h-full w-full px-12  transform skew-y-12 my-auto overflow-auto  scrollbar-track-transparent overflow-y-scroll scrollbar-thin scrollbar-thumb-[#747a80] scrollbar-thumb-rounded-md'>
+    <div className=' absolute flex z-10 h-full w-full px-12  transform skew-y-12 my-auto overflow-hidden  scrollbar-track-transparent overflow-y-scroll scrollbar-thin scrollbar-thumb-[#747a80] scrollbar-thumb-rounded-md'>
 
       <div className='shadow-2xl mt-14 flex  hover:opacity-100 flex-col w-full xs:w-full overflow-y-auto space-y-4 my-auto py-16  items-center opacity-20 bg-[#FFFF] shadow-slate-900  transition-all duration-300 transform '>
         
-        <p className= 'text-[#fafafa] font-bold text-2xl text-center w-full py-6 tracking-wider bg-[#E0C4A0] '>Inicio de sesion <span> <LoginOutlinedIcon/></span></p>
+        <p className= 'text-[#fafafa] font-bold text-2xl text-center w-full py-6 tracking-wider bg-[#837e7e] '>Registrarse <span> <LoginOutlinedIcon/></span></p>
   <form
             action=""
             onSubmit={handleSubmit(onSubmit)}

@@ -1,7 +1,7 @@
 'use client'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-// LoginForm.js (or any suitable name)
+
 import { useState } from 'react';
 // import { signUpSuccess } from '../../../redux/authSlice';
 // import { useDispatch } from 'react-redux';
@@ -18,7 +18,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-              const form_data = new URLSearchParams({
+        const form_data = new URLSearchParams({
         username: username,
         password: password,
       });
@@ -88,10 +88,10 @@ const response = await axios.post(`http://localhost:8000/token`, formData);  // 
           </button>
         </form>
         <p className="mt-4 text-center">
-         {`¿No tienes una cuenta asociada? `} <span onClick={()=>router.push('/#new-client-form')} className="text-blue-500 hover:underline">Registrarse</span>
+         {`¿No tienes una cuenta asociada? `} <span onClick={()=>router.push('/auth/register')} className="text-blue-500 hover:underline">Registrarse</span>
         </p>
         <div className="mt-6 border-t border-gray-300 pt-4 text-center">
-          <p className="text-sm   ">© 2024 C&C Accion Legal SASS. All rights reserved.</p>
+          <p className="text-sm   ">© 2024 Protypark. All rights reserved.</p>
         </div>
       </div>
     </main>
